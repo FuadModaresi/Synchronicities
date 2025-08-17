@@ -19,6 +19,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 import { Card, CardContent } from "@/components/ui/card";
+import { useTranslations } from "next-intl";
 
 
 interface HistoryTableProps {
@@ -26,12 +27,13 @@ interface HistoryTableProps {
 }
 
 export function HistoryTable({ events }: HistoryTableProps) {
+  const t = useTranslations('HistoryTable');
   if (events.length === 0) {
     return (
         <Card className="text-center py-12">
             <CardContent>
-                <h3 className="text-xl font-semibold">No Events Recorded Yet</h3>
-                <p className="text-muted-foreground mt-2">Start by recording your first synchronicity event on the home page.</p>
+                <h3 className="text-xl font-semibold">{t('noEventsTitle')}</h3>
+                <p className="text-muted-foreground mt-2">{t('noEventsDescription')}</p>
             </CardContent>
         </Card>
     )
@@ -43,10 +45,10 @@ export function HistoryTable({ events }: HistoryTableProps) {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[100px]">Number</TableHead>
-              <TableHead>Date</TableHead>
-              <TableHead>Location</TableHead>
-              <TableHead>Emotion</TableHead>
+              <TableHead className="w-[100px]">{t('number')}</TableHead>
+              <TableHead>{t('date')}</TableHead>
+              <TableHead>{t('location')}</TableHead>
+              <TableHead>{t('emotion')}</TableHead>
               <TableHead className="text-right"></TableHead>
             </TableRow>
           </TableHeader>
@@ -74,23 +76,23 @@ export function HistoryTable({ events }: HistoryTableProps) {
               <div className="bg-muted/50 p-4 -mt-4">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {event.insight && <div className="md:col-span-2">
-                        <h4 className="font-semibold mb-2">AI Insight</h4>
+                        <h4 className="font-semibold mb-2">{t('aiInsight')}</h4>
                         <p className="text-sm text-muted-foreground">{event.insight}</p>
                     </div>}
                     <div className="space-y-2">
                         {event.peoplePresent && <div>
-                            <h4 className="font-semibold text-sm">People Present</h4>
+                            <h4 className="font-semibold text-sm">{t('peoplePresent')}</h4>
                             <p className="text-sm text-muted-foreground">{event.peoplePresent}</p>
                         </div>}
                          {event.additionalDetails && <div>
-                            <h4 className="font-semibold text-sm">Additional Details</h4>
+                            <h4 className="font-semibold text-sm">{t('additionalDetails')}</h4>
                             <p className="text-sm text-muted-foreground">{event.additionalDetails}</p>
                         </div>}
                     </div>
                 </div>
                  {event.photoDataUri && (
                     <div className="mt-4">
-                        <h4 className="font-semibold mb-2">Photo</h4>
+                        <h4 className="font-semibold mb-2">{t('photo')}</h4>
                         <img src={event.photoDataUri} alt="Synchronicity event" className="rounded-lg max-w-xs border shadow-sm"/>
                     </div>
                 )}

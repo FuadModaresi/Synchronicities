@@ -1,4 +1,3 @@
-
 import {createLocalizedPathnamesNavigation} from 'next-intl/navigation';
 
 export const locales = ['en'] as const;

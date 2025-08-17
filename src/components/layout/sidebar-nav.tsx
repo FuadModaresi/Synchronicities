@@ -18,9 +18,11 @@ import {
   Settings,
   HelpCircle,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export function SidebarNav() {
   const pathname = usePathname();
+  const t = useTranslations('Sidebar');
 
   const isActive = (path: string) => pathname === path;
 
@@ -29,7 +31,7 @@ export function SidebarNav() {
       <SidebarHeader>
         <Link href="/" className="flex items-center gap-2">
           <Sparkles className="w-8 h-8 text-primary" />
-          <h1 className="font-headline text-2xl font-bold">Synchronicities</h1>
+          <h1 className="font-headline text-2xl font-bold">{t('title')}</h1>
         </Link>
       </SidebarHeader>
       <SidebarContent>
@@ -38,11 +40,11 @@ export function SidebarNav() {
             <SidebarMenuButton
               asChild
               isActive={isActive("/")}
-              tooltip={{ children: "Event Entry" }}
+              tooltip={{ children: t('eventEntry') }}
             >
               <Link href="/">
                 <Home />
-                <span>Event Entry</span>
+                <span>{t('eventEntry')}</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -50,11 +52,11 @@ export function SidebarNav() {
             <SidebarMenuButton
               asChild
               isActive={isActive("/dashboard")}
-              tooltip={{ children: "Dashboard" }}
+              tooltip={{ children: t('dashboard') }}
             >
               <Link href="/dashboard">
                 <LayoutDashboard />
-                <span>Dashboard</span>
+                <span>{t('dashboard')}</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -65,13 +67,13 @@ export function SidebarNav() {
           <SidebarMenuItem>
             <SidebarMenuButton>
               <HelpCircle />
-              <span>Help & Support</span>
+              <span>{t('help')}</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton>
               <Settings />
-              <span>Settings</span>
+              <span>{t('settings')}</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

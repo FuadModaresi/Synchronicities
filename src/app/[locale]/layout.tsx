@@ -1,15 +1,13 @@
-
 import type { Metadata } from "next";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages, unstable_setRequestLocale } from 'next-intl/server';
+import { ReactNode } from "react";
 import { EventsProvider } from "@/context/events-provider";
 import { AuthProvider } from "@/context/auth-provider";
 import { MainLayout } from "@/components/layout/main-layout";
 import { Toaster } from "@/components/ui/toaster";
 import "../globals.css";
-import { NextIntlClientProvider } from "next-intl";
-import { ReactNode } from "react";
-import { getMessages, unstable_setRequestLocale } from 'next-intl/server';
-import { locales } from "../../../navigation";
-
+import { locales } from "@/navigation";
 
 export const metadata: Metadata = {
   title: "Synchronicities",
@@ -27,11 +25,7 @@ export default async function LocaleLayout({
   children: ReactNode;
   params: { locale: string };
 }) {
-  // Enable static rendering
   unstable_setRequestLocale(locale);
-
-  // Providing all messages to the client
-  // side is the easiest way to get started
   const messages = await getMessages();
 
   return (

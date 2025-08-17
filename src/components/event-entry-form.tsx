@@ -40,6 +40,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import React from "react";
+import { useTranslations } from "next-intl";
 
 const toBase64 = (file: File): Promise<string> =>
   new Promise((resolve, reject) => {
@@ -49,20 +50,23 @@ const toBase64 = (file: File): Promise<string> =>
     reader.onerror = reject;
   });
   
-const formSchema = z.object({
-    number: z.coerce
-      .number({ required_error: "A number or sign is required." })
-      .min(0, "Number must be positive."),
-    date: z.date({ required_error: "A date is required." }),
-    time: z.string().regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, "Invalid time format (HH:mm)"),
-    location: z.string().min(1, "Location is required."),
-    emotionalState: z.string().min(1, "Emotional state is required."),
-    photo: z.any().optional(),
-    peoplePresent: z.string().optional(),
-    additionalDetails: z.string().optional(),
-  });
+const useFormSchema = () => {
+    const t = useTranslations('EventForm');
+    return z.object({
+        number: z.coerce
+          .number({ required_error: t('numberRequired') })
+          .min(0, t('numberPositive')),
+        date: z.date({ required_error: t('dateRequired') }),
+        time: z.string().regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, t('invalidTime')),
+        location: z.string().min(1, t('locationRequired')),
+        emotionalState: z.string().min(1, t('emotionalStateRequired')),
+        photo: z.any().optional(),
+        peoplePresent: z.string().optional(),
+        additionalDetails: z.string().optional(),
+      });
+}
 
-type FormValues = z.infer<typeof formSchema>;
+type FormValues = z.infer<ReturnType<typeof useFormSchema>>;
   
 interface EventEntryFormProps {
   onInsightGenerated: (insight: GenerateSynchronicityInsightsOutput | null) => void;
@@ -72,6 +76,9 @@ interface EventEntryFormProps {
 
 
 export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: EventEntryFormProps) {
+  const t = useTranslations('EventForm');
+  const tToast = useTranslations('Toasts');
+  const formSchema = useFormSchema();
 
   const { addEvent } = useEvents();
   const { toast } = useToast();
@@ -101,7 +108,7 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
         console.error("Error converting file to base64", error);
         toast({
           title: "Error",
-          description: "Could not process the image file.",
+          description: tToast('imageError'),
           variant: "destructive",
         });
         setIsLoading(false);
@@ -120,8 +127,8 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
       onInsightGenerated(result);
       addEvent({ ...inputForAI, insight: result.insight });
       toast({
-        title: "Event Recorded",
-        description: "Your synchronicity and its insight have been saved.",
+        title: tToast('eventRecordedTitle'),
+        description: tToast('eventRecordedDescription'),
       });
       form.reset({
         ...form.getValues(),
@@ -136,8 +143,8 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
       console.error("Error generating insight:", error);
       onInsightGenerated(null);
       toast({
-        title: "AI Error",
-        description: "Could not generate an insight for this event.",
+        title: tToast('aiErrorTitle'),
+        description: tToast('aiErrorDescription'),
         variant: "destructive",
       });
     } finally {
@@ -153,11 +160,11 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
           name="number"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Number / Sign</FormLabel>
+              <FormLabel>{t('numberLabel')}</FormLabel>
               <FormControl>
                 <div className="relative">
                   <PlusCircle className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                  <Input type="number" placeholder="e.g., 1111, 444" {...field} className="pl-9" value={field.value ?? ''} onChange={e => field.onChange(e.target.value === '' ? undefined : Number(e.target.value))}/>
+                  <Input type="number" placeholder={t('numberPlaceholder')} {...field} className="pl-9" value={field.value ?? ''} onChange={e => field.onChange(e.target.value === '' ? undefined : Number(e.target.value))}/>
                 </div>
               </FormControl>
               <FormMessage />
@@ -171,7 +178,7 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
             name="date"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Date</FormLabel>
+                <FormLabel>{t('dateLabel')}</FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
@@ -185,7 +192,7 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
                         {field.value ? (
                           format(field.value, "PPP")
                         ) : (
-                          <span>Pick a date</span>
+                          <span>{t('pickDate')}</span>
                         )}
                         <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                       </Button>
@@ -212,7 +219,7 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
             name="time"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Time</FormLabel>
+                <FormLabel>{t('timeLabel')}</FormLabel>
                 <FormControl>
                    <div className="relative">
                     <Clock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -230,11 +237,11 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
           name="location"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Location</FormLabel>
+              <FormLabel>{t('locationLabel')}</FormLabel>
               <FormControl>
                 <div className="relative">
                   <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                  <Input placeholder="e.g., At a coffee shop" {...field} className="pl-9"/>
+                  <Input placeholder={t('locationPlaceholder')} {...field} className="pl-9"/>
                 </div>
               </FormControl>
               <FormMessage />
@@ -247,15 +254,15 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
           name="emotionalState"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Your Emotional State</FormLabel>
+              <FormLabel>{t('emotionalStateLabel')}</FormLabel>
               <FormControl>
                 <div className="relative">
                   <Smile className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                  <Input placeholder="e.g., Hopeful, curious, stressed" {...field} className="pl-9"/>
+                  <Input placeholder={t('emotionalStatePlaceholder')} {...field} className="pl-9"/>
                 </div>
               </FormControl>
               <FormDescription>
-                How were you feeling at that moment?
+                {t('emotionalStateDescription')}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -267,7 +274,7 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
           name="photo"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Optional Photo</FormLabel>
+              <FormLabel>{t('photoLabel')}</FormLabel>
               <FormControl>
                 <div className="relative">
                   <ImageIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -284,11 +291,11 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
           name="peoplePresent"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>People Present (Optional)</FormLabel>
+              <FormLabel>{t('peoplePresentLabel')}</FormLabel>
               <FormControl>
                 <div className="relative">
                   <Users className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                  <Input placeholder="e.g., Friend, partner, stranger" {...field} className="pl-9"/>
+                  <Input placeholder={t('peoplePresentPlaceholder')} {...field} className="pl-9"/>
                 </div>
               </FormControl>
               <FormMessage />
@@ -301,10 +308,10 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
           name="additionalDetails"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Additional Details (Optional)</FormLabel>
+              <FormLabel>{t('additionalDetailsLabel')}</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="Any other details? e.g., What were you thinking about?"
+                  placeholder={t('additionalDetailsPlaceholder')}
                   {...field}
                 />
               </FormControl>
@@ -319,7 +326,7 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
           ) : (
             <Sparkles className="mr-2 h-4 w-4" />
           )}
-          {isLoading ? "Generating Insight..." : "Save & Generate Insight"}
+          {isLoading ? t('submitButtonLoading') : t('submitButton')}
         </Button>
       </form>
     </Form>
