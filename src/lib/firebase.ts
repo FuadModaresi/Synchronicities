@@ -5,14 +5,19 @@ import { getAuth } from "firebase/auth";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
-// IMPORTANT: REPLACE WITH YOUR FIREBASE CONFIG
+// IMPORTANT: To fix the API key error, replace the placeholder values below
+// with the configuration object from your own Firebase project.
+// You can get this from the Firebase console:
+// 1. Go to your Project Settings (gear icon).
+// 2. In the "Your apps" card, select your web app.
+// 3. Find the "Firebase SDK snippet" and select "Config".
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "YOUR_API_KEY", // Replace with your API key
+  authDomain: "YOUR_AUTH_DOMAIN", // Replace with your auth domain
+  projectId: "YOUR_PROJECT_ID", // Replace with your project ID
+  storageBucket: "YOUR_STORAGE_BUCKET", // Replace with your storage bucket
+  messagingSenderId: "YOUR_MESSAGING_SENDER_ID", // Replace with your messaging sender ID
+  appId: "YOUR_APP_ID" // Replace with your app ID
 };
 
 // Initialize Firebase
