@@ -1,3 +1,4 @@
+
 "use client";
 
 import type { GenerateSynchronicityInsightsOutput } from "@/ai/flows/generate-synchronicity-insights";
@@ -76,6 +77,7 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      number: undefined,
       date: new Date(),
       time: format(new Date(), "HH:mm"),
       location: "",
@@ -145,7 +147,7 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
               <FormControl>
                 <div className="relative">
                   <PlusCircle className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                  <Input type="number" placeholder="e.g., 1111, 444" {...field} className="pl-9"/>
+                  <Input type="number" placeholder="e.g., 1111, 444" {...field} className="pl-9" value={field.value ?? ''} />
                 </div>
               </FormControl>
               <FormMessage />
