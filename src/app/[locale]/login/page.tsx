@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useRouter } from "@/navigation";
+import { useRouter } from "../../../navigation";
 // import { auth } from "@/lib/firebase";
 // import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { Button } from "@/components/ui/button";
