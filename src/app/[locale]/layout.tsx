@@ -7,7 +7,7 @@ import { Toaster } from "@/components/ui/toaster";
 import "../globals.css";
 import { NextIntlClientProvider } from "next-intl";
 import { ReactNode } from "react";
-import { getMessages } from 'next-intl/server';
+import { getMessages, unstable_setRequestLocale } from 'next-intl/server';
 import { locales } from "../../../navigation";
 
 
@@ -27,7 +27,10 @@ export default async function LocaleLayout({
   children: ReactNode;
   params: { locale: string };
 }) {
+  // Providing all messages to the client
+  // side is the easiest way to get started
   const messages = await getMessages();
+  unstable_setRequestLocale(locale);
 
   return (
     <html lang={locale} dir={locale === 'fa' ? 'rtl' : 'ltr'}>
