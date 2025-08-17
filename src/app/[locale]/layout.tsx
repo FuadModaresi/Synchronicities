@@ -7,7 +7,7 @@ import { AuthProvider } from "@/context/auth-provider";
 import { MainLayout } from "@/components/layout/main-layout";
 import { Toaster } from "@/components/ui/toaster";
 import "../globals.css";
-import { locales } from "@/navigation";
+import { locales } from "../../../navigation";
 
 export const metadata: Metadata = {
   title: "Synchronicities",
