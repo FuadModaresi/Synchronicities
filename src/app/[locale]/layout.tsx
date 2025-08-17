@@ -5,7 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import "../globals.css";
 import { NextIntlClientProvider } from "next-intl";
 import { ReactNode } from "react";
-import { getMessages } from 'next-intl/server';
+import { getMessages, unstable_setRequestLocale } from 'next-intl/server';
 
 export const metadata: Metadata = {
   title: "Synchronicities",
@@ -19,7 +19,9 @@ export default async function LocaleLayout({
   children: ReactNode;
   params: { locale: string };
 }) {
+  unstable_setRequestLocale(locale);
   const messages = await getMessages();
+
   return (
     <html lang={locale} dir={locale === 'fa' ? 'rtl' : 'ltr'}>
       <head>
