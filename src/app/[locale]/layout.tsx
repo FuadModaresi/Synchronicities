@@ -27,10 +27,10 @@ export default async function LocaleLayout({
   children: ReactNode;
   params: { locale: string };
 }) {
+  unstable_setRequestLocale(locale);
   // Providing all messages to the client
   // side is the easiest way to get started
   const messages = await getMessages();
-  unstable_setRequestLocale(locale);
 
   return (
     <html lang={locale} dir={locale === 'fa' ? 'rtl' : 'ltr'}>

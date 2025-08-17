@@ -1,9 +1,9 @@
 
 "use client";
 
-import { useRouter } from "../../../../navigation";
-// import { auth } from "@/lib/firebase";
-// import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { useRouter } from "../../../navigation";
+import { auth } from "@/lib/firebase";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Sparkles } from "lucide-react";
@@ -15,13 +15,12 @@ export default function LoginPage() {
   const router = useRouter();
 
   const handleSignIn = async () => {
-    // const provider = new GoogleAuthProvider();
-    // try {
-    //   await signInWithPopup(auth, provider);
-    // } catch (error) {
-    //   console.error("Error signing in with Google", error);
-    // }
-    alert("Firebase is not configured. Please add your Firebase project configuration to src/lib/firebase.ts");
+    const provider = new GoogleAuthProvider();
+    try {
+      await signInWithPopup(auth, provider);
+    } catch (error) {
+      console.error("Error signing in with Google", error);
+    }
   };
 
   useEffect(() => {
