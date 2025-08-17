@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { EventsProvider } from "@/context/events-provider";
+import { AuthProvider } from "@/context/auth-provider";
 import { MainLayout } from "@/components/layout/main-layout";
 import { Toaster } from "@/components/ui/toaster";
 import "../globals.css";
@@ -31,10 +32,12 @@ export default async function LocaleLayout({
       </head>
       <body className="font-body antialiased">
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <EventsProvider>
-            <MainLayout>{children}</MainLayout>
-            <Toaster />
-          </EventsProvider>
+          <AuthProvider>
+            <EventsProvider>
+              <MainLayout>{children}</MainLayout>
+              <Toaster />
+            </EventsProvider>
+          </AuthProvider>
         </NextIntlClientProvider>
       </body>
     </html>
