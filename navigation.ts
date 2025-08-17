@@ -1,17 +1,15 @@
 
 import {createLocalizedPathnamesNavigation} from 'next-intl/navigation';
 
-export const locales = ['en', 'fa'] as const;
+export const locales = ['en'] as const;
 
 export const pathnames = {
   '/': '/',
   '/dashboard': {
     en: '/dashboard',
-    fa: '/dashboard',
   },
   '/login': {
     en: '/login',
-    fa: '/login',
   },
 } satisfies Record<string, any>;
 

@@ -3,7 +3,6 @@
 
 import React from "react";
 import { usePathname, useRouter } from "@/navigation";
-import { useLocale } from "next-intl";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -16,7 +15,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { Moon, Sun, Languages, LogOut } from "lucide-react";
+import { Moon, Sun, LogOut } from "lucide-react";
 import { useAuth } from "@/context/auth-provider";
 import { auth } from "@/lib/firebase";
 
@@ -51,13 +50,7 @@ const useTheme = () => {
 export function Header() {
     const { theme, toggleTheme } = useTheme();
     const router = useRouter();
-    const pathname = usePathname();
-    const locale = useLocale();
     const { user } = useAuth();
-
-    const handleLocaleChange = (newLocale: string) => {
-      router.replace(pathname, {locale: newLocale});
-    };
 
     const handleLogout = async () => {
         await auth.signOut();
@@ -70,22 +63,6 @@ export function Header() {
         <SidebarTrigger />
       </div>
       <div className="flex w-full items-center justify-end gap-4">
-         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon">
-              <Languages className="h-[1.2rem] w-[1.2rem]" />
-              <span className="sr-only">Change language</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem onSelect={() => handleLocaleChange('en')} disabled={locale === 'en'}>
-              English
-            </DropdownMenuItem>
-            <DropdownMenuItem onSelect={() => handleLocaleChange('fa')} disabled={locale === 'fa'}>
-              فارسی (Persian)
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
         <Button variant="ghost" size="icon" onClick={toggleTheme} aria-label="Toggle theme">
           <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
           <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
