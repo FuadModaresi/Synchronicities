@@ -3,7 +3,8 @@ import { EventsProvider } from "@/context/events-provider";
 import { MainLayout } from "@/components/layout/main-layout";
 import { Toaster } from "@/components/ui/toaster";
 import "../globals.css";
-import { NextIntlClientProvider, useMessages } from "next-intl";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages } from "next-intl/server";
 import { ReactNode } from "react";
 
 export const metadata: Metadata = {
@@ -11,14 +12,14 @@ export const metadata: Metadata = {
   description: "Capture, analyze, and find meaning in life's meaningful coincidences.",
 };
 
-export default function LocaleLayout({
+export default async function LocaleLayout({
   children,
   params: { locale },
 }: {
   children: ReactNode;
   params: { locale: string };
 }) {
-  const messages = useMessages();
+  const messages = await getMessages();
   return (
     <html lang={locale} dir={locale === 'fa' ? 'rtl' : 'ltr'}>
       <head>

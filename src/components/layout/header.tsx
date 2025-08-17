@@ -1,8 +1,7 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "@/navigation";
 import { useLocale } from "next-intl";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -14,10 +13,6 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-  DropdownMenuSub,
-  DropdownMenuSubTrigger,
-  DropdownMenuSubContent,
-  DropdownMenuPortal
 } from "@/components/ui/dropdown-menu";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Moon, Sun, Languages } from "lucide-react";
@@ -57,8 +52,7 @@ export function Header() {
     const locale = useLocale();
 
     const handleLocaleChange = (newLocale: string) => {
-      const newPath = pathname.replace(`/${locale}`, `/${newLocale}`);
-      router.replace(newPath);
+      router.replace(pathname, {locale: newLocale});
     };
 
   return (
@@ -75,10 +69,10 @@ export function Header() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem onSelect={() => handleLocaleChange('en')}>
+            <DropdownMenuItem onSelect={() => handleLocaleChange('en')} disabled={locale === 'en'}>
               English
             </DropdownMenuItem>
-            <DropdownMenuItem onSelect={() => handleLocaleChange('fa')}>
+            <DropdownMenuItem onSelect={() => handleLocaleChange('fa')} disabled={locale === 'fa'}>
               فارسی (Persian)
             </DropdownMenuItem>
           </DropdownMenuContent>

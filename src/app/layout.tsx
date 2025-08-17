@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 
-// The root layout applies to all routes.
+// The root layout is a client component because it uses client-side
+// features like the theme provider.
 export default function RootLayout({ children }: { children: ReactNode }) {
   return children;
 }

@@ -1,7 +1,6 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Link, usePathname } from "@/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import {
@@ -22,15 +21,14 @@ import {
 
 export function SidebarNav() {
   const t = useTranslations('Sidebar');
-  const locale = useLocale();
   const pathname = usePathname();
 
-  const isActive = (path: string) => pathname === `/${locale}${path}`;
+  const isActive = (path: string) => pathname === path;
 
   return (
     <>
       <SidebarHeader>
-        <Link href={`/${locale}`} className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2">
           <Sparkles className="w-8 h-8 text-primary" />
           <h1 className="font-headline text-2xl font-bold">{t('title')}</h1>
         </Link>
@@ -43,7 +41,7 @@ export function SidebarNav() {
               isActive={isActive("/")}
               tooltip={{ children: t('eventEntry') }}
             >
-              <Link href={`/${locale}`}>
+              <Link href="/">
                 <Home />
                 <span>{t('eventEntry')}</span>
               </Link>
@@ -55,7 +53,7 @@ export function SidebarNav() {
               isActive={isActive("/dashboard")}
               tooltip={{ children: t('dashboard') }}
             >
-              <Link href={`/${locale}/dashboard`}>
+              <Link href="/dashboard">
                 <LayoutDashboard />
                 <span>{t('dashboard')}</span>
               </Link>
