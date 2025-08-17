@@ -17,8 +17,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        body: ['PT Sans', 'sans-serif'],
-        headline: ['Belleza', 'serif'],
+        body: ['PT Sans', 'Vazirmatn', 'sans-serif'],
+        headline: ['Belleza', 'Vazirmatn', 'serif'],
         code: ['monospace'],
       },
       colors: {

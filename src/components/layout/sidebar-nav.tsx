@@ -1,8 +1,8 @@
-
 "use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import {
   SidebarHeader,
@@ -21,16 +21,18 @@ import {
 } from "lucide-react";
 
 export function SidebarNav() {
+  const t = useTranslations('Sidebar');
+  const locale = useLocale();
   const pathname = usePathname();
 
-  const isActive = (path: string) => pathname === path;
+  const isActive = (path: string) => pathname === `/${locale}${path}`;
 
   return (
     <>
       <SidebarHeader>
-        <Link href="/" className="flex items-center gap-2">
+        <Link href={`/${locale}`} className="flex items-center gap-2">
           <Sparkles className="w-8 h-8 text-primary" />
-          <h1 className="font-headline text-2xl font-bold">Synchronicities</h1>
+          <h1 className="font-headline text-2xl font-bold">{t('title')}</h1>
         </Link>
       </SidebarHeader>
       <SidebarContent>
@@ -39,11 +41,11 @@ export function SidebarNav() {
             <SidebarMenuButton
               asChild
               isActive={isActive("/")}
-              tooltip={{ children: "Event Entry" }}
+              tooltip={{ children: t('eventEntry') }}
             >
-              <Link href="/">
+              <Link href={`/${locale}`}>
                 <Home />
-                <span>Event Entry</span>
+                <span>{t('eventEntry')}</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -51,11 +53,11 @@ export function SidebarNav() {
             <SidebarMenuButton
               asChild
               isActive={isActive("/dashboard")}
-              tooltip={{ children: "Dashboard" }}
+              tooltip={{ children: t('dashboard') }}
             >
-              <Link href="/dashboard">
+              <Link href={`/${locale}/dashboard`}>
                 <LayoutDashboard />
-                <span>Dashboard</span>
+                <span>{t('dashboard')}</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -66,13 +68,13 @@ export function SidebarNav() {
           <SidebarMenuItem>
             <SidebarMenuButton>
               <HelpCircle />
-              <span>Help & Support</span>
+              <span>{t('help')}</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton>
               <Settings />
-              <span>Settings</span>
+              <span>{t('settings')}</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

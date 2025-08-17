@@ -1,0 +1,78 @@
+{
+  "Sidebar": {
+    "title": "Synchronicities",
+    "eventEntry": "Event Entry",
+    "dashboard": "Dashboard",
+    "help": "Help & Support",
+    "settings": "Settings"
+  },
+  "HomePage": {
+    "title": "Record a Synchronicity",
+    "description": "What meaningful coincidence has crossed your path today? Capture the details to uncover hidden patterns.",
+    "insightLoading": "Generating insight...",
+    "insightPlaceholderTitle": "Your insight will appear here",
+    "insightPlaceholderDescription": "Fill out the form and our AI will provide an interpretation of your synchronicity event."
+  },
+  "EventForm": {
+    "numberLabel": "Number / Sign",
+    "numberPlaceholder": "e.g., 1111, 444",
+    "dateLabel": "Date",
+    "pickDate": "Pick a date",
+    "timeLabel": "Time",
+    "locationLabel": "Location",
+    "locationPlaceholder": "e.g., At a coffee shop",
+    "emotionalStateLabel": "Your Emotional State",
+    "emotionalStatePlaceholder": "e.g., Hopeful, curious, stressed",
+    "emotionalStateDescription": "How were you feeling at that moment?",
+    "photoLabel": "Optional Photo",
+    "peoplePresentLabel": "People Present (Optional)",
+    "peoplePresentPlaceholder": "e.g., Friend, partner, stranger",
+    "additionalDetailsLabel": "Additional Details (Optional)",
+    "additionalDetailsPlaceholder": "Any other details? e.g., What were you thinking about?",
+    "submitButton": "Save & Generate Insight",
+    "submitButtonLoading": "Generating Insight...",
+    "numberRequired": "A number or sign is required.",
+    "numberPositive": "Number must be positive.",
+    "dateRequired": "A date is required.",
+    "invalidTime": "Invalid time format (HH:mm)",
+    "locationRequired": "Location is required.",
+    "emotionalStateRequired": "Emotional state is required."
+  },
+  "InsightCard": {
+    "title": "AI Insight",
+    "description": "Here's a potential meaning behind your experience."
+  },
+  "DashboardPage": {
+    "title": "Your Pattern Dashboard",
+    "description": "Discover the connections and rhythms in your synchronicity journal.",
+    "totalEvents": "Total Events",
+    "totalEventsDescription": "synchronicity events recorded",
+    "mostFrequentNumber": "Most Frequent Number",
+    "mostFrequentNumberDescription": "is your most common sign",
+    "numberFrequencyTitle": "Number Frequency",
+    "numberFrequencyDescription": "Top 10 most frequently recorded numbers or signs.",
+    "comingSoonTitle": "Coming Soon: Emotional Timeline",
+    "comingSoonDescription": "Visualize how your emotional state correlates with synchronicity events over time.",
+    "comingSoonPlaceholder": "Analytics chart will be available here.",
+    "eventHistoryTitle": "Event History"
+  },
+  "HistoryTable": {
+    "noEventsTitle": "No Events Recorded Yet",
+    "noEventsDescription": "Start by recording your first synchronicity event on the home page.",
+    "number": "Number",
+    "date": "Date",
+    "location": "Location",
+    "emotion": "Emotion",
+    "aiInsight": "AI Insight",
+    "peoplePresent": "People Present",
+    "additionalDetails": "Additional Details",
+    "photo": "Photo"
+  },
+  "Toasts": {
+    "imageError": "Could not process the image file.",
+    "eventRecordedTitle": "Event Recorded",
+    "eventRecordedDescription": "Your synchronicity and its insight have been saved.",
+    "aiErrorTitle": "AI Error",
+    "aiErrorDescription": "Could not generate an insight for this event."
+  }
+}
