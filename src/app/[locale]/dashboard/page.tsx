@@ -14,17 +14,18 @@ export default function DashboardPage() {
 
   useEffect(() => {
     if (!loading && !user) {
-      router.replace('/login');
+      // Temporarily disable redirection to allow UI to be seen without real auth
+      // router.replace('/login');
     }
   }, [user, loading, router]);
 
-  if (loading || !user) {
-    return (
-        <div className="flex items-center justify-center h-screen">
-            <div>Loading...</div>
-        </div>
-    )
-  }
+  // if (loading || !user) {
+  //   return (
+  //       <div className="flex items-center justify-center h-screen">
+  //           <div>Loading...</div>
+  //       </div>
+  //   )
+  // }
 
   return (
     <div className="container mx-auto p-4 md:p-8">

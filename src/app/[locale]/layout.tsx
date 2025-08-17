@@ -13,6 +13,12 @@ export const metadata: Metadata = {
   description: "Capture, analyze, and find meaning in life's meaningful coincidences.",
 };
 
+const locales = ['en', 'fa'];
+
+export function generateStaticParams() {
+  return locales.map((locale) => ({locale}));
+}
+
 export default async function LocaleLayout({
   children,
   params: { locale },

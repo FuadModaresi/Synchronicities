@@ -18,7 +18,7 @@ import {
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Moon, Sun, Languages, LogOut } from "lucide-react";
 import { useAuth } from "@/context/auth-provider";
-import { auth } from "@/lib/firebase";
+// import { auth } from "@/lib/firebase";
 
 
 const useTheme = () => {
@@ -60,7 +60,7 @@ export function Header() {
     };
 
     const handleLogout = async () => {
-        await auth.signOut();
+        // await auth.signOut();
         router.push('/login');
     }
 
