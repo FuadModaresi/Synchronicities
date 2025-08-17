@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -35,26 +36,28 @@ export function SidebarNav() {
       <SidebarContent>
         <SidebarMenu>
           <SidebarMenuItem>
-            <Link href="/" legacyBehavior passHref>
-              <SidebarMenuButton
-                isActive={isActive("/")}
-                tooltip={{ children: "Event Entry" }}
-              >
+            <SidebarMenuButton
+              asChild
+              isActive={isActive("/")}
+              tooltip={{ children: "Event Entry" }}
+            >
+              <Link href="/">
                 <Home />
                 <span>Event Entry</span>
-              </SidebarMenuButton>
-            </Link>
+              </Link>
+            </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <Link href="/dashboard" legacyBehavior passHref>
-              <SidebarMenuButton
-                isActive={isActive("/dashboard")}
-                tooltip={{ children: "Dashboard" }}
-              >
+            <SidebarMenuButton
+              asChild
+              isActive={isActive("/dashboard")}
+              tooltip={{ children: "Dashboard" }}
+            >
+              <Link href="/dashboard">
                 <LayoutDashboard />
                 <span>Dashboard</span>
-              </SidebarMenuButton>
-            </Link>
+              </Link>
+            </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarContent>
