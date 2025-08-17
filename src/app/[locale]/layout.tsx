@@ -4,8 +4,8 @@ import { MainLayout } from "@/components/layout/main-layout";
 import { Toaster } from "@/components/ui/toaster";
 import "../globals.css";
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
 import { ReactNode } from "react";
+import { getMessages } from 'next-intl/server';
 
 export const metadata: Metadata = {
   title: "Synchronicities",
