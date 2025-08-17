@@ -1,3 +1,4 @@
+
 "use client";
 
 import {
@@ -8,14 +9,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Sparkles } from "lucide-react";
-import { useTranslations } from "next-intl";
 
 interface InsightCardProps {
   insight: string;
 }
 
 export function InsightCard({ insight }: InsightCardProps) {
-  const t = useTranslations('InsightCard');
   return (
     <Card className="w-full max-w-md bg-accent/50 animate-in fade-in zoom-in-95">
       <CardHeader>
@@ -23,10 +22,10 @@ export function InsightCard({ insight }: InsightCardProps) {
           <div className="bg-primary/20 p-2 rounded-full">
             <Sparkles className="h-6 w-6 text-primary" />
           </div>
-          <CardTitle className="font-headline text-3xl">{t('title')}</CardTitle>
+          <CardTitle className="font-headline text-3xl">AI Insight</CardTitle>
         </div>
         <CardDescription>
-          {t('description')}
+          Here's a potential meaning behind your experience.
         </CardDescription>
       </CardHeader>
       <CardContent>

@@ -1,8 +1,8 @@
 
 "use client";
 
-import { Link, usePathname } from "@/navigation";
-import { useTranslations } from "next-intl";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import {
   SidebarHeader,
@@ -21,7 +21,6 @@ import {
 } from "lucide-react";
 
 export function SidebarNav() {
-  const t = useTranslations('Sidebar');
   const pathname = usePathname();
 
   const isActive = (path: string) => pathname === path;
@@ -31,7 +30,7 @@ export function SidebarNav() {
       <SidebarHeader>
         <Link href="/" className="flex items-center gap-2">
           <Sparkles className="w-8 h-8 text-primary" />
-          <h1 className="font-headline text-2xl font-bold">{t('title')}</h1>
+          <h1 className="font-headline text-2xl font-bold">Synchronicities</h1>
         </Link>
       </SidebarHeader>
       <SidebarContent>
@@ -40,11 +39,11 @@ export function SidebarNav() {
             <SidebarMenuButton
               asChild
               isActive={isActive("/")}
-              tooltip={{ children: t('eventEntry') }}
+              tooltip={{ children: "Event Entry" }}
             >
               <Link href="/">
                 <Home />
-                <span>{t('eventEntry')}</span>
+                <span>Event Entry</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -52,11 +51,11 @@ export function SidebarNav() {
             <SidebarMenuButton
               asChild
               isActive={isActive("/dashboard")}
-              tooltip={{ children: t('dashboard') }}
+              tooltip={{ children: "Dashboard" }}
             >
               <Link href="/dashboard">
                 <LayoutDashboard />
-                <span>{t('dashboard')}</span>
+                <span>Dashboard</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -67,13 +66,13 @@ export function SidebarNav() {
           <SidebarMenuItem>
             <SidebarMenuButton>
               <HelpCircle />
-              <span>{t('help')}</span>
+              <span>Help & Support</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton>
               <Settings />
-              <span>{t('settings')}</span>
+              <span>Settings</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

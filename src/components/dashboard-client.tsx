@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useMemo } from "react";
@@ -18,7 +19,7 @@ import {
 } from "@/components/ui/chart";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts";
 import { BarChart3, TrendingUp } from "lucide-react";
-import { useTranslations } from "next-intl";
+
 
 const chartConfig = {
   count: {
@@ -28,7 +29,7 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export function DashboardClient() {
-  const t = useTranslations('DashboardPage');
+
   const { events } = useEvents();
 
   const numberFrequency = useMemo(() => {
@@ -50,27 +51,27 @@ export function DashboardClient() {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">{t('totalEvents')}</CardTitle>
+            <CardTitle className="text-sm font-medium">Total Events</CardTitle>
             <BarChart3 className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{totalEvents}</div>
             <p className="text-xs text-muted-foreground">
-              {t('totalEventsDescription')}
+              synchronicity events recorded
             </p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              {t('mostFrequentNumber')}
+              Most Frequent Number
             </CardTitle>
             <TrendingUp className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{mostFrequentNumber}</div>
             <p className="text-xs text-muted-foreground">
-              {t('mostFrequentNumberDescription')}
+              is your most common sign
             </p>
           </CardContent>
         </Card>
@@ -78,9 +79,9 @@ export function DashboardClient() {
       <div className="grid gap-8 md:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle className="font-headline text-2xl">{t('numberFrequencyTitle')}</CardTitle>
+            <CardTitle className="font-headline text-2xl">Number Frequency</CardTitle>
             <CardDescription>
-              {t('numberFrequencyDescription')}
+              Top 10 most frequently recorded numbers or signs.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -105,22 +106,22 @@ export function DashboardClient() {
         </Card>
          <Card className="flex flex-col">
           <CardHeader>
-            <CardTitle className="font-headline text-2xl">{t('comingSoonTitle')}</CardTitle>
+            <CardTitle className="font-headline text-2xl">Coming Soon: Emotional Timeline</CardTitle>
             <CardDescription>
-              {t('comingSoonDescription')}
+              Visualize how your emotional state correlates with synchronicity events over time.
             </CardDescription>
           </CardHeader>
           <CardContent className="flex-grow flex items-center justify-center">
              <div className="text-center text-muted-foreground">
                 <TrendingUp className="h-12 w-12 mx-auto mb-4" />
-                <p>{t('comingSoonPlaceholder')}</p>
+                <p>Analytics chart will be available here.</p>
              </div>
           </CardContent>
         </Card>
       </div>
 
       <div>
-        <h2 className="font-headline text-3xl font-bold mb-4">{t('eventHistoryTitle')}</h2>
+        <h2 className="font-headline text-3xl font-bold mb-4">Event History</h2>
         <HistoryTable events={events} />
       </div>
     </div>
