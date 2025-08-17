@@ -29,22 +29,13 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} dir="ltr">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Belleza&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet" />
-      </head>
-      <body className="font-body antialiased">
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <AuthProvider>
-            <EventsProvider>
-              <MainLayout>{children}</MainLayout>
-              <Toaster />
-            </EventsProvider>
-          </AuthProvider>
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <NextIntlClientProvider locale={locale} messages={messages}>
+      <AuthProvider>
+        <EventsProvider>
+          <MainLayout>{children}</MainLayout>
+          <Toaster />
+        </EventsProvider>
+      </AuthProvider>
+    </NextIntlClientProvider>
   );
 }
