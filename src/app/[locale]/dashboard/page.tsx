@@ -4,7 +4,7 @@
 import { DashboardClient } from "@/components/dashboard-client";
 import {useTranslations} from 'next-intl';
 import { useAuth } from "@/context/auth-provider";
-import { useRouter } from "../../../../navigation";
+import { useRouter } from "../../../navigation";
 import { useEffect } from "react";
 
 export default function DashboardPage() {
