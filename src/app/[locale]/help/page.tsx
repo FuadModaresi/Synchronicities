@@ -36,8 +36,6 @@ export default function HelpPage() {
         const result = await submitFeedback({
             rating,
             feedback,
-            userId: user?.uid,
-            userEmail: user?.email ?? undefined,
         });
 
         if (result.success) {

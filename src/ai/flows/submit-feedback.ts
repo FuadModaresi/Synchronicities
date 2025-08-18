@@ -19,35 +19,43 @@ import fs from 'fs';
 // It ensures that the app is initialized only once.
 function getFirebaseAdminApp(): App {
     if (getApps().length > 0) {
+        console.log("Firebase Admin SDK already initialized.");
         return getApps()[0];
     }
     
-    // Construct the path to the credentials file.
-    // path.join combines path segments into one path.
-    // process.cwd() gives the current working directory where the node process was started.
     const credentialsPath = path.join(process.cwd(), 'day-weaver-q3g5q-firebase-adminsdk-fbsvc-52abe06b29.json');
+    console.log(`Attempting to load credentials from: ${credentialsPath}`);
 
     try {
+        if (!fs.existsSync(credentialsPath)) {
+            throw new Error(`Credentials file not found at: ${credentialsPath}`);
+        }
         const serviceAccount = JSON.parse(fs.readFileSync(credentialsPath, 'utf8'));
         
-        return initializeApp({
+        console.log("Service account credentials loaded successfully. Initializing Firebase Admin SDK...");
+        const app = initializeApp({
             credential: cert(serviceAccount),
         });
+        console.log("Firebase Admin SDK initialized successfully.");
+        return app;
+
     } catch (error) {
-        console.error("Failed to load or parse service account credentials.", error);
-        // If we can't initialize, we throw an error to prevent the app from running in a broken state.
-        throw new Error("Could not initialize Firebase Admin SDK.");
+        console.error("CRITICAL: Failed to initialize Firebase Admin SDK.", error);
+        throw new Error("Could not initialize Firebase Admin SDK due to a credentials error.");
     }
 }
 
-const firestoreDb = getFirestore(getFirebaseAdminApp());
+let firestoreDb: ReturnType<typeof getFirestore> | null = null;
+try {
+    firestoreDb = getFirestore(getFirebaseAdminApp());
+} catch (e) {
+    // Error is already logged in getFirebaseAdminApp
+}
 
 
 const SubmitFeedbackInputSchema = z.object({
   rating: z.number().min(0).max(5).describe('The user\'s star rating for the app, from 0 to 5.'),
   feedback: z.string().optional().describe('The user\'s written feedback message.'),
-  userId: z.string().optional().describe('The ID of the user submitting the feedback.'),
-  userEmail: z.string().optional().describe('The email of the user submitting the feedback.'),
 });
 
 export type SubmitFeedbackInput = z.infer<typeof SubmitFeedbackInputSchema>;
@@ -63,17 +71,21 @@ const submitFeedbackFlow = ai.defineFlow(
     outputSchema: z.object({success: z.boolean()}),
   },
   async (input) => {
+    if (!firestoreDb) {
+        console.error("Firestore DB is not available. Cannot submit feedback.");
+        return { success: false };
+    }
     try {
+      console.log('Attempting to write feedback to Firestore:', input);
       const feedbackRef = firestoreDb.collection('feedback');
-      await feedbackRef.add({
+      const docRef = await feedbackRef.add({
         ...input,
         createdAt: new Date().toISOString(),
       });
-      console.log('Feedback successfully written to Firestore.');
+      console.log(`Feedback successfully written to Firestore with document ID: ${docRef.id}.`);
       return { success: true };
     } catch (error) {
       console.error('Error writing feedback to Firestore:', error);
-      // In a real app, you'd want more robust error handling here.
       return { success: false };
     }
   }
