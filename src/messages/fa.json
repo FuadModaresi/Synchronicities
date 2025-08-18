@@ -25,7 +25,11 @@
     "emotionalStateLabel": "وضعیت احساسی شما",
     "emotionalStatePlaceholder": "مثال: امیدوار، کنجکاو، پراسترس",
     "emotionalStateDescription": "در آن لحظه چه احساسی داشتید؟",
-    "photoLabel": "عکس (اختیاری)",
+    "photoLabel": "عکس",
+    "useCamera": "استفاده از دوربین",
+    "useMyLocation": "استفاده از مکان من",
+    "backToForm": "بازگشت به فرم",
+    "capturePhoto": "گرفتن عکس",
     "peoplePresentLabel": "افراد حاضر (اختیاری)",
     "peoplePresentPlaceholder": "مثال: دوست، شریک، غریبه",
     "additionalDetailsLabel": "جزئیات بیشتر (اختیاری)",
@@ -90,7 +94,11 @@
     "exportSuccessTitle": "خروجی موفقیت‌آمیز بود",
     "exportSuccessDescription": "داده‌های رویداد شما دانلود شد.",
     "deleteSuccessTitle": "داده‌ها حذف شد",
-    "deleteSuccessDescription": "تمام داده‌های رویداد شما پاک شد."
+    "deleteSuccessDescription": "تمام داده‌های رویداد شما پاک شد.",
+    "cameraErrorTitle": "دسترسی به دوربین رد شد",
+    "cameraErrorDescription": "لطفاً مجوزهای دوربین را در تنظیمات مرورگر خود فعال کنید.",
+    "locationErrorTitle": "دسترسی به مکان رد شد",
+    "locationErrorDescription": "لطفاً برای استفاده از این ویژگی، مجوزهای مکان را فعال کنید."
   },
   "HelpPage": {
     "title": "راهنما و پشتیبانی",

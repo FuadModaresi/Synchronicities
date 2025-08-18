@@ -10,6 +10,8 @@ import { z } from "zod";
 import { format } from "date-fns";
 import {
   Calendar as CalendarIcon,
+  Camera,
+  ChevronLeft,
   Clock,
   Image as ImageIcon,
   Loader2,
@@ -40,8 +42,11 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
+import { Card, CardContent } from "./ui/card";
+import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
+
 
 const toBase64 = (file: File): Promise<string> =>
   new Promise((resolve, reject) => {
@@ -60,6 +65,7 @@ const useFormSchema = () => {
         location: z.string().min(1, t('locationRequired')),
         emotionalState: z.string().min(1, t('emotionalStateRequired')),
         photo: z.any().optional(),
+        photoDataUri: z.string().optional(),
         peoplePresent: z.string().optional(),
         additionalDetails: z.string().optional(),
         myInterpretation: z.string().optional(),
@@ -84,6 +90,14 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
   const { addEvent } = useEvents();
   const { toast } = useToast();
 
+  const [showCamera, setShowCamera] = useState(false);
+  const [hasCameraPermission, setHasCameraPermission] = useState<boolean | null>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [capturedImage, setCapturedImage] = useState<string | null>(null);
+  const [locationLoading, setLocationLoading] = useState(false);
+
+
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -95,14 +109,83 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
       peoplePresent: "",
       additionalDetails: "",
       myInterpretation: "",
+      photoDataUri: "",
     },
   });
+
+   useEffect(() => {
+    if (showCamera) {
+      const getCameraPermission = async () => {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+          if (videoRef.current) {
+            videoRef.current.srcObject = stream;
+          }
+          setHasCameraPermission(true);
+        } catch (error) {
+          console.error('Error accessing camera:', error);
+          setHasCameraPermission(false);
+          toast({
+            variant: 'destructive',
+            title: tToast('cameraErrorTitle'),
+            description: tToast('cameraErrorDescription'),
+          });
+        }
+      };
+      getCameraPermission();
+    } else {
+        // Stop camera stream when not shown
+        if (videoRef.current && videoRef.current.srcObject) {
+            const stream = videoRef.current.srcObject as MediaStream;
+            stream.getTracks().forEach(track => track.stop());
+        }
+    }
+  }, [showCamera, tToast, toast]);
+
+
+  const handleCapture = () => {
+    if (videoRef.current && canvasRef.current) {
+      const video = videoRef.current;
+      const canvas = canvasRef.current;
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const context = canvas.getContext('2d');
+      if (context) {
+        context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+        const dataUri = canvas.toDataURL('image/png');
+        setCapturedImage(dataUri);
+        form.setValue('photoDataUri', dataUri);
+        setShowCamera(false);
+      }
+    }
+  };
+
+  const handleLocation = () => {
+    setLocationLoading(true);
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        form.setValue('location', `${latitude}, ${longitude}`);
+        setLocationLoading(false);
+      },
+      (error) => {
+        console.error("Error getting location", error);
+        toast({
+          title: tToast('locationErrorTitle'),
+          description: tToast('locationErrorDescription'),
+          variant: "destructive",
+        });
+        setLocationLoading(false);
+      }
+    );
+  };
+
 
   async function onSubmit(values: FormValues) {
     setIsLoading(true);
     onInsightGenerated(null);
 
-    let photoDataUri: string | undefined = undefined;
+    let photoDataUri: string | undefined = values.photoDataUri;
     if (values.photo && values.photo[0]) {
       try {
         photoDataUri = await toBase64(values.photo[0]);
@@ -128,7 +211,7 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
     try {
       const result = await generateSynchronicityInsights(inputForAI);
       onInsightGenerated(result);
-      addEvent({ ...values, date: format(values.date, "yyyy-MM-dd"), insight: result.insight });
+      addEvent({ ...values, date: format(values.date, "yyyy-MM-dd"), photoDataUri, insight: result.insight });
       toast({
         title: tToast('eventRecordedTitle'),
         description: tToast('eventRecordedDescription'),
@@ -142,7 +225,9 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
         additionalDetails: '',
         photo: undefined,
         myInterpretation: '',
+        photoDataUri: '',
       });
+      setCapturedImage(null);
     } catch (error) {
       console.error("Error generating insight:", error);
       onInsightGenerated(null);
@@ -154,6 +239,35 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
     } finally {
       setIsLoading(false);
     }
+  }
+
+  if (showCamera) {
+    return (
+        <Card>
+            <CardContent className="p-4">
+                <Button variant="ghost" size="sm" onClick={() => setShowCamera(false)} className="mb-4">
+                    <ChevronLeft className="mr-2 h-4 w-4" />
+                    {t('backToForm')}
+                </Button>
+                <div className="space-y-4">
+                    <video ref={videoRef} className="w-full aspect-video rounded-md bg-muted" autoPlay muted playsInline />
+                    <canvas ref={canvasRef} className="hidden" />
+
+                    {hasCameraPermission === false && (
+                         <Alert variant="destructive">
+                            <AlertTitle>{tToast('cameraErrorTitle')}</AlertTitle>
+                            <AlertDescription>{tToast('cameraErrorDescription')}</AlertDescription>
+                        </Alert>
+                    )}
+
+                    <Button onClick={handleCapture} disabled={!hasCameraPermission} className="w-full">
+                        <Camera className="mr-2 h-4 w-4" />
+                        {t('capturePhoto')}
+                    </Button>
+                </div>
+            </CardContent>
+        </Card>
+    )
   }
 
   return (
@@ -242,12 +356,19 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
           render={({ field }) => (
             <FormItem>
               <FormLabel>{t('locationLabel')}</FormLabel>
-              <FormControl>
-                <div className="relative">
-                  <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                  <Input placeholder={t('locationPlaceholder')} {...field} className="pl-9"/>
-                </div>
-              </FormControl>
+              <div className="flex gap-2">
+                <FormControl>
+                    <div className="relative flex-grow">
+                    <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input placeholder={t('locationPlaceholder')} {...field} className="pl-9"/>
+                    </div>
+                </FormControl>
+                <Button type="button" variant="outline" onClick={handleLocation} disabled={locationLoading}>
+                    <MapPin className="h-4 w-4" />
+                    <span className="sr-only">{t('useMyLocation')}</span>
+                     {locationLoading && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}
+                </Button>
+              </div>
               <FormMessage />
             </FormItem>
           )}
@@ -296,23 +417,62 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
             </FormItem>
           )}
         />
-
-        <FormField
-          control={form.control}
-          name="photo"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{t('photoLabel')}</FormLabel>
-              <FormControl>
-                <div className="relative">
-                  <ImageIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                  <Input type="file" accept="image/*" {...form.register("photo")} className="pl-9 pt-2 text-sm"/>
+        
+        <div className="space-y-2">
+            <FormLabel>{t('photoLabel')}</FormLabel>
+            {capturedImage && (
+                <div className="relative w-fit">
+                    <img src={capturedImage} alt="Captured" className="rounded-md h-32 border" />
+                    <Button
+                        type="button"
+                        variant="destructive"
+                        size="sm"
+                        className="absolute -top-2 -right-2 rounded-full h-6 w-6 p-1"
+                        onClick={() => {
+                            setCapturedImage(null);
+                            form.setValue('photoDataUri', undefined);
+                        }}
+                    >
+                        &times;
+                    </Button>
                 </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+            )}
+            <div className="flex gap-2">
+                 <FormField
+                    control={form.control}
+                    name="photo"
+                    render={({ field }) => (
+                        <FormItem className="flex-grow">
+                        <FormControl>
+                            <div className="relative">
+                            <ImageIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                            <Input 
+                                type="file" 
+                                accept="image/*" 
+                                {...form.register("photo")} 
+                                className="pl-9 pt-2 text-sm"
+                                onChange={(e) => {
+                                    if (e.target.files && e.target.files[0]) {
+                                        const file = e.target.files[0];
+                                        toBase64(file).then(dataUri => {
+                                            setCapturedImage(dataUri);
+                                            form.setValue('photoDataUri', dataUri);
+                                        });
+                                    }
+                                }}
+                            />
+                            </div>
+                        </FormControl>
+                        <FormMessage />
+                        </FormItem>
+                    )}
+                    />
+                <Button type="button" variant="outline" onClick={() => setShowCamera(true)}>
+                    <Camera className="mr-2 h-4 w-4" /> {t('useCamera')}
+                </Button>
+            </div>
+        </div>
+
         
         <FormField
           control={form.control}

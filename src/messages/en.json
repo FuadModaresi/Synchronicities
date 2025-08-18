@@ -25,7 +25,11 @@
     "emotionalStateLabel": "Your Emotional State",
     "emotionalStatePlaceholder": "e.g., Hopeful, curious, stressed",
     "emotionalStateDescription": "How were you feeling at that moment?",
-    "photoLabel": "Optional Photo",
+    "photoLabel": "Photo",
+    "useCamera": "Use Camera",
+    "useMyLocation": "Use My Location",
+    "backToForm": "Back to Form",
+    "capturePhoto": "Capture Photo",
     "peoplePresentLabel": "People Present (Optional)",
     "peoplePresentPlaceholder": "e.g., Friend, partner, stranger",
     "additionalDetailsLabel": "Additional Details (Optional)",
@@ -90,7 +94,11 @@
     "exportSuccessTitle": "Export Successful",
     "exportSuccessDescription": "Your event data has been downloaded.",
     "deleteSuccessTitle": "Data Deleted",
-    "deleteSuccessDescription": "All your event data has been cleared."
+    "deleteSuccessDescription": "All your event data has been cleared.",
+    "cameraErrorTitle": "Camera Access Denied",
+    "cameraErrorDescription": "Please enable camera permissions in your browser settings.",
+    "locationErrorTitle": "Location Access Denied",
+    "locationErrorDescription": "Please enable location permissions to use this feature."
   },
   "HelpPage": {
     "title": "Help & Support",
