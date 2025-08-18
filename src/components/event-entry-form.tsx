@@ -54,9 +54,7 @@ const toBase64 = (file: File): Promise<string> =>
 const useFormSchema = () => {
     const t = useTranslations('EventForm');
     return z.object({
-        number: z.coerce
-          .number({ required_error: t('numberRequired') })
-          .min(0, t('numberPositive')),
+        number: z.string().min(1, t('numberRequired')),
         date: z.date({ required_error: t('dateRequired') }),
         time: z.string().regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, t('invalidTime')),
         location: z.string().min(1, t('locationRequired')),
@@ -89,7 +87,7 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      number: undefined,
+      number: "",
       date: new Date(),
       time: format(new Date(), "HH:mm"),
       location: "",
@@ -137,7 +135,7 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
       });
       form.reset({
         ...form.getValues(),
-        number: undefined,
+        number: "",
         location: '',
         emotionalState: '',
         peoplePresent: '',
@@ -170,7 +168,7 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
               <FormControl>
                 <div className="relative">
                   <PlusCircle className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                  <Input type="number" placeholder={t('numberPlaceholder')} {...field} className="pl-9" value={field.value ?? ''} onChange={e => field.onChange(e.target.value === '' ? undefined : Number(e.target.value))}/>
+                  <Input type="text" placeholder={t('numberPlaceholder')} {...field} className="pl-9" />
                 </div>
               </FormControl>
               <FormMessage />

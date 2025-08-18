@@ -15,7 +15,7 @@ import type { SynchronicityEvent } from '@/lib/types';
 
 // We define the event schema without the 'id' for the AI's purpose.
 const EventSchema = z.object({
-  number: z.number(),
+  number: z.string(),
   date: z.string(),
   time: z.string(),
   location: z.string(),

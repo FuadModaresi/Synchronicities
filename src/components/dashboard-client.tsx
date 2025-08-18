@@ -61,7 +61,7 @@ export function DashboardClient() {
 
 
   const numberFrequency = useMemo(() => {
-    const counts: { [key: number]: number } = {};
+    const counts: { [key: string]: number } = {};
     events.forEach((event) => {
       counts[event.number] = (counts[event.number] || 0) + 1;
     });

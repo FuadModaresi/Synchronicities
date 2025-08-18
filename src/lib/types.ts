@@ -1,6 +1,6 @@
 export interface SynchronicityEvent {
   id: string;
-  number: number;
+  number: string;
   date: string;
   time: string;
   location: string;

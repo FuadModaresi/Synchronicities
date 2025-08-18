@@ -14,7 +14,7 @@ import {z} from 'genkit';
 import { getNewsForEvent } from '@/services/news';
 
 const GenerateSynchronicityInsightsInputSchema = z.object({
-  number: z.number().describe('The number or sign associated with the synchronicity event.'),
+  number: z.string().describe('The number or sign associated with the synchronicity event.'),
   date: z.string().describe('The date of the synchronicity event.'),
   time: z.string().describe('The time of the synchronicity event.'),
   location: z.string().describe('The location of the synchronicity event.'),
