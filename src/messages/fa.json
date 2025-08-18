@@ -102,7 +102,9 @@
     "locationErrorTitle": "دسترسی به مکان رد شد",
     "locationErrorDescription": "لطفاً برای استفاده از این ویژگی، مجوزهای مکان را فعال کنید.",
     "feedbackSuccessTitle": "بازخورد دریافت شد",
-    "feedbackSuccessDescription": "از بازخورد شما سپاسگزاریم! ما از نظرات شما قدردانی می‌کنیم."
+    "feedbackSuccessDescription": "از بازخورد شما سپاسگزاریم! ما از نظرات شما قدردانی می‌کنیم.",
+    "submissionErrorTitle": "خطای ارسال",
+    "submissionErrorDescription": "مشکلی در ارسال بازخورد شما وجود داشت. لطفاً دوباره امتحان کنید."
   },
   "HelpPage": {
     "title": "راهنما و پشتیبانی",

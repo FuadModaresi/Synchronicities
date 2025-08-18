@@ -3,21 +3,25 @@
 
 import { useTranslations } from "next-intl";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Sparkles, Home, LayoutDashboard, BrainCircuit, BarChart3, Camera, MapPin, Edit, Star, MessageSquare } from "lucide-react";
+import { Sparkles, Home, LayoutDashboard, BrainCircuit, BarChart3, Camera, MapPin, Edit, Star, MessageSquare, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
+import { submitFeedback } from "@/ai/flows/submit-feedback";
+import { useAuth } from "@/context/auth-provider";
 
 export default function HelpPage() {
   const t = useTranslations('HelpPage');
   const tToast = useTranslations('Toasts');
+  const { user } = useAuth();
   const [rating, setRating] = useState(0);
   const [feedback, setFeedback] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (feedback.trim() === '' && rating === 0) {
         toast({
@@ -27,13 +31,35 @@ export default function HelpPage() {
         });
         return;
     }
-    console.log("Feedback submitted:", { rating, feedback });
-    toast({
-        title: t('feedbackSuccessTitle'),
-        description: t('feedbackSuccessDescription'),
-    });
-    setRating(0);
-    setFeedback("");
+    setIsSubmitting(true);
+    try {
+        const result = await submitFeedback({
+            rating,
+            feedback,
+            userId: user?.uid,
+            userEmail: user?.email ?? undefined,
+        });
+
+        if (result.success) {
+            toast({
+                title: t('feedbackSuccessTitle'),
+                description: t('feedbackSuccessDescription'),
+            });
+            setRating(0);
+            setFeedback("");
+        } else {
+            throw new Error("Feedback submission failed");
+        }
+    } catch (error) {
+        console.error("Error submitting feedback:", error);
+        toast({
+            variant: "destructive",
+            title: tToast('submissionErrorTitle'),
+            description: tToast('submissionErrorDescription'),
+        });
+    } finally {
+        setIsSubmitting(false);
+    }
   };
 
 
@@ -156,7 +182,10 @@ export default function HelpPage() {
                             rows={4}
                         />
                     </div>
-                    <Button type="submit">{t('submitButton')}</Button>
+                    <Button type="submit" disabled={isSubmitting}>
+                        {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                        {t('submitButton')}
+                    </Button>
                 </form>
             </CardContent>
         </Card>

@@ -102,7 +102,9 @@
     "locationErrorTitle": "Location Access Denied",
     "locationErrorDescription": "Please enable location permissions to use this feature.",
     "feedbackSuccessTitle": "Feedback Received",
-    "feedbackSuccessDescription": "Thank you for your feedback! We appreciate your input."
+    "feedbackSuccessDescription": "Thank you for your feedback! We appreciate your input.",
+    "submissionErrorTitle": "Submission Error",
+    "submissionErrorDescription": "There was a problem submitting your feedback. Please try again."
   },
   "HelpPage": {
     "title": "Help & Support",
