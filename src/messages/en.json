@@ -71,14 +71,18 @@
     "emotion": "Emotion",
     "aiInsight": "AI Insight",
     "myInterpretation": "My Interpretation",
+    "myInterpretationPlaceholder": "Add your reflections here...",
     "peoplePresent": "People Present",
     "additionalDetails": "Additional Details",
-    "photo": "Photo"
+    "photo": "Photo",
+    "saveInterpretation": "Save"
   },
   "Toasts": {
     "imageError": "Could not process the image file.",
     "eventRecordedTitle": "Event Recorded",
     "eventRecordedDescription": "Your synchronicity and its insight have been saved.",
+    "eventUpdatedTitle": "Interpretation Saved",
+    "eventUpdatedDescription": "Your reflection has been updated.",
     "aiErrorTitle": "AI Error",
     "aiErrorDescription": "Could not generate an insight for this event.",
     "exportErrorTitle": "No Events to Export",

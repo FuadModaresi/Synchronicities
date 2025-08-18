@@ -71,14 +71,18 @@
     "emotion": "احساس",
     "aiInsight": "بینش هوش مصنوعی",
     "myInterpretation": "تفسیر من",
+    "myInterpretationPlaceholder": "تاملات خود را اینجا اضافه کنید...",
     "peoplePresent": "افراد حاضر",
     "additionalDetails": "جزئیات بیشتر",
-    "photo": "عکس"
+    "photo": "عکس",
+    "saveInterpretation": "ذخیره"
   },
   "Toasts": {
     "imageError": "پردازش فایل تصویر ممکن نبود.",
     "eventRecordedTitle": "رویداد ثبت شد",
     "eventRecordedDescription": "همزمانی و بینش آن ذخیره شد.",
+    "eventUpdatedTitle": "تفسیر ذخیره شد",
+    "eventUpdatedDescription": "تامل شما به‌روزرسانی شد.",
     "aiErrorTitle": "خطای هوش مصنوعی",
     "aiErrorDescription": "تولید بینش برای این رویداد ممکن نبود.",
     "exportErrorTitle": "رویدادی برای خروجی گرفتن وجود ندارد",
