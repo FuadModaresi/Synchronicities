@@ -11,11 +11,11 @@ Synchronicities is a modern web application designed to help you record, analyze
 
 ## Core Features
 
--   **Seamless Event Entry**: Quickly capture synchronicity events with all the essential details: the number or sign, date, time, location, your emotional state, and even an optional photo.
--   **AI-Powered Insights**: Leverage the power of Google's Gemini model via Genkit to receive insightful, concise interpretations of your recorded events, helping you uncover potential meanings and messages.
--   **Analytics Dashboard**: Visualize the patterns in your life with a clean and simple dashboard. Track the frequency of numbers and signs to see what the universe might be emphasizing.
--   **Comprehensive History**: An elegant, accordion-style table allows you to review all your past entries, along with their associated AI insights and details, at a glance.
--   **Secure & Personal**: With Firebase Authentication, your journal is personal and secure. All your recorded events are tied to your account.
+-   **Rich Event Entry**: Quickly capture synchronicity events with all the essential details. Record numbers, signs, dates, times, and your emotional state. Enhance entries by using your device's **camera** for instant photo capture, attaching images, or using **geolocation** to pinpoint the exact location.
+-   **Context-Aware AI Insights**: Leverage the power of Google's Gemini model to receive insightful interpretations. The AI analyzes not only your entry but also **real-world news and events** from that specific time and place to provide a deeper, more grounded meaning.
+-   **Dynamic Analytics Dashboard**: Visualize the patterns in your life. Track the frequency of different signs and view a holistic, AI-generated **"Bigger Picture" analysis** of your entire journey. This overview evolves as you add more events and reflections.
+-   **Evolving History & Reflections**: Review all past entries in an elegant, interactive table. You can add or **edit your own interpretation** at any time, and the AI will use your updated reflections to refine its "Bigger Picture" analysis.
+-   **Secure & Personal**: With Firebase Authentication, your journal is personal and secure. All your recorded events are tied to your account and stored locally in your browser for privacy and offline access.
 
 ## Tech Stack
 
