@@ -3,7 +3,7 @@
 
 import { useTranslations } from "next-intl";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Sparkles, Home, LayoutDashboard, BrainCircuit, BarChart3 } from "lucide-react";
+import { Sparkles, Home, LayoutDashboard, BrainCircuit, BarChart3, Camera, MapPin, Edit } from "lucide-react";
 
 export default function HelpPage() {
   const t = useTranslations('HelpPage');
@@ -47,6 +47,8 @@ export default function HelpPage() {
               <li><strong>{t('eventEntryItem2Title')}</strong>: {t('eventEntryItem2Desc')}</li>
               <li><strong>{t('eventEntryItem3Title')}</strong>: {t('eventEntryItem3Desc')}</li>
               <li><strong>{t('eventEntryItem4Title')}</strong>: {t('eventEntryItem4Desc')}</li>
+              <li><strong><Camera className="inline w-4 h-4 mr-1"/>{t('eventEntryItem5Title')}</strong>: {t('eventEntryItem5Desc')}</li>
+              <li><strong><MapPin className="inline w-4 h-4 mr-1"/>{t('eventEntryItem6Title')}</strong>: {t('eventEntryItem6Desc')}</li>
             </ul>
              <p>{t('eventEntryParagraph2')}</p>
           </CardContent>
@@ -64,7 +66,7 @@ export default function HelpPage() {
             <ul className="list-disc list-inside space-y-2">
               <li><strong><BarChart3 className="inline w-4 h-4 mr-1"/>{t('dashboardItem1Title')}</strong>: {t('dashboardItem1Desc')}</li>
               <li><strong><BrainCircuit className="inline w-4 h-4 mr-1"/>{t('dashboardItem2Title')}</strong>: {t('dashboardItem2Desc')}</li>
-              <li><strong>{t('dashboardItem3Title')}</strong>: {t('dashboardItem3Desc')}</li>
+              <li><strong><Edit className="inline w-4 h-4 mr-1"/>{t('dashboardItem3Title')}</strong>: {t('dashboardItem3Desc')}</li>
             </ul>
           </CardContent>
         </Card>

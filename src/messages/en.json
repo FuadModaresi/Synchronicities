@@ -111,22 +111,26 @@
     "eventEntryTitle": "Recording an Event",
     "eventEntryParagraph1": "The heart of the app is the Event Entry form. Capturing details accurately helps the AI provide a more meaningful insight. Here's what to fill in:",
     "eventEntryItem1Title": "Number/Sign",
-    "eventEntryItem1Desc": "The core of the synchronicity. This is usually a number (like 11:11, 444, 123) but can be any recurring sign.",
+    "eventEntryItem1Desc": "The core of the synchronicity. This can be a number (like 11:11, 444) or any recurring sign, like 'a white feather.'",
     "eventEntryItem2Title": "Date & Time",
     "eventEntryItem2Desc": "When the event occurred. The more precise, the better for pattern recognition.",
     "eventEntryItem3Title": "Location & People Present",
     "eventEntryItem3Desc": "The context of where you were and who you were with can be very significant.",
     "eventEntryItem4Title": "Emotional State & Details",
     "eventEntryItem4Desc": "How were you feeling? What were you thinking about? This context is crucial for a deeper interpretation.",
-    "eventEntryParagraph2": "After filling out the form, click 'Save & Generate Insight'. Our AI will analyze the data and provide a concise interpretation of what this event might mean for you.",
+    "eventEntryItem5Title": "Photo Capture",
+    "eventEntryItem5Desc": "Optionally attach a photo. You can upload a file or use your device's camera to capture the moment instantly.",
+    "eventEntryItem6Title": "Location Services",
+    "eventEntryItem6Desc": "Use the location button to automatically fill in your current geographical coordinates.",
+    "eventEntryParagraph2": "After filling out the form, click 'Save & Generate Insight'. Our AI will analyze the data, including relevant news from that day and location, to provide a concise interpretation of what this event might mean for you.",
     "dashboardTitle": "Your Dashboard: Seeing the Patterns",
     "dashboardParagraph1": "The Dashboard is where your journey comes to life. It visualizes the data from your entries to help you see the bigger picture:",
     "dashboardItem1Title": "Frequency Charts",
     "dashboardItem1Desc": "Quickly see which numbers or signs are appearing most often in your life.",
     "dashboardItem2Title": "The Bigger Picture",
-    "dashboardItem2Desc": "This AI-powered analysis looks at all your events together. It identifies overarching themes, emotional patterns, and potential messages that you might miss by looking at events individually.",
-    "dashboardItem3Title": "Event History",
-    "dashboardItem3Desc": "Review all your past entries and their AI insights at any time.",
+    "dashboardItem2Desc": "This AI-powered analysis looks at all your events together, including your personal interpretations, to identify overarching themes and potential messages.",
+    "dashboardItem3Title": "Evolving History",
+    "dashboardItem3Desc": "Review all your past entries. You can add or edit your own interpretation at any time, and the 'Bigger Picture' analysis will update accordingly.",
     "benefitsTitle": "Benefits of Using the App",
     "benefitsItem1": "Increased Awareness: Become more attuned to the synchronicities happening around you.",
     "benefitsItem2": "Personal Insight: Gain a deeper understanding of your life's path, challenges, and opportunities.",
@@ -146,5 +150,3 @@
     "confirm": "Yes, delete everything"
   }
 }
-
-    
