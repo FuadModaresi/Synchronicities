@@ -2,7 +2,8 @@
 "use client";
 
 import React from "react";
-import { useRouter } from "@/navigation";
+import { usePathname, useRouter } from "@/navigation";
+import { useLocale } from "next-intl";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -15,7 +16,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { Moon, Sun, LogOut } from "lucide-react";
+import { Moon, Sun, LogOut, Languages } from "lucide-react";
 import { useAuth } from "@/context/auth-provider";
 import { auth } from "@/lib/firebase";
 
@@ -50,11 +51,17 @@ const useTheme = () => {
 export function Header() {
     const { theme, toggleTheme } = useTheme();
     const router = useRouter();
+    const pathname = usePathname();
+    const locale = useLocale();
     const { user } = useAuth();
 
     const handleLogout = async () => {
         await auth.signOut();
         router.push('/login');
+    }
+    
+    const handleLocaleChange = (newLocale: 'en' | 'fa') => {
+        router.replace(pathname, {locale: newLocale});
     }
 
   return (
@@ -62,11 +69,35 @@ export function Header() {
       <div className="md:hidden">
         <SidebarTrigger />
       </div>
-      <div className="flex w-full items-center justify-end gap-4">
+      <div className="flex w-full items-center justify-end gap-2">
         <Button variant="ghost" size="icon" onClick={toggleTheme} aria-label="Toggle theme">
           <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
           <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
         </Button>
+
+        <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon">
+                    <Languages />
+                    <span className="sr-only">Change language</span>
+                </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+                <DropdownMenuItem 
+                    disabled={locale === 'en'} 
+                    onClick={() => handleLocaleChange('en')}
+                >
+                    English
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                    disabled={locale === 'fa'} 
+                    onClick={() => handleLocaleChange('fa')}
+                >
+                    فارسی
+                </DropdownMenuItem>
+            </DropdownMenuContent>
+        </DropdownMenu>
+
         { user ? (
             <DropdownMenu>
             <DropdownMenuTrigger asChild>
