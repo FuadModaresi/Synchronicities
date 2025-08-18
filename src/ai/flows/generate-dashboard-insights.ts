@@ -42,7 +42,7 @@ export type GenerateDashboardInsightsOutput = z.infer<typeof GenerateDashboardIn
 export async function generateDashboardInsights(input: GenerateDashboardInsightsInput): Promise<GenerateDashboardInsightsOutput> {
   // Map the full event objects to what the schema expects, omitting the 'id' and 'photoDataUri'.
   const eventsForAI = input.events.map(e => ({
-      number: e.number,
+      number: String(e.number), // Ensure number is always a string
       date: e.date,
       time: e.time,
       location: e.location,
