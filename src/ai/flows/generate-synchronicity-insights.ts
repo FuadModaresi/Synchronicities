@@ -19,10 +19,11 @@ const GenerateSynchronicityInsightsInputSchema = z.object({
   location: z.string().describe('The location of the synchronicity event.'),
   emotionalState: z.string().describe('The emotional state of the user during the event.'),
   photoDataUri: z.string().optional().describe(
-    'A photo related to the event, as a data URI that must include a MIME type and use Base64 encoding. Expected format: \'data:<mimetype>;base64,<encoded_data>\'.' // Removed default value as it's optional
+    'A photo related to the event, as a data URI that must include a MIME type and use Base64 encoding. Expected format: \'data:<mimetype>;base64,<encoded_data>\'.'
   ),
   peoplePresent: z.string().optional().describe('The people present during the event.'),
   additionalDetails: z.string().optional().describe('Any additional details about the event.'),
+  locale: z.string().optional().describe('The locale for the response language, e.g., "en" or "fa".'),
 });
 
 export type GenerateSynchronicityInsightsInput = z.infer<typeof GenerateSynchronicityInsightsInputSchema>;
@@ -41,7 +42,7 @@ const prompt = ai.definePrompt({
   name: 'generateSynchronicityInsightsPrompt',
   input: {schema: GenerateSynchronicityInsightsInputSchema},
   output: {schema: GenerateSynchronicityInsightsOutputSchema},
-  prompt: `You are a guide specialized in interpreting synchronicity events. Consider the following details of a recorded synchronicity event and provide an insightful interpretation:
+  prompt: `You are a guide specialized in interpreting synchronicity events. Respond in the language of the provided locale: {{{locale}}}. Consider the following details of a recorded synchronicity event and provide an insightful interpretation:
 
 Number/Sign: {{{number}}}
 Date: {{{date}}}
@@ -58,7 +59,7 @@ People Present: {{{peoplePresent}}}
 Additional Details: {{{additionalDetails}}}
 {{/if}}
 
-Based on these details, what deeper meaning or message could be associated with this synchronicity? Keep the interpretation concise and insightful.`, // Added a question to guide the LLM
+Based on these details, what deeper meaning or message could be associated with this synchronicity? Keep the interpretation concise and insightful. Respond in {{{locale}}}.`,
 });
 
 const generateSynchronicityInsightsFlow = ai.defineFlow(

@@ -40,7 +40,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import React from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 
 const toBase64 = (file: File): Promise<string> =>
   new Promise((resolve, reject) => {
@@ -78,6 +78,7 @@ interface EventEntryFormProps {
 export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: EventEntryFormProps) {
   const t = useTranslations('EventForm');
   const tToast = useTranslations('Toasts');
+  const locale = useLocale();
   const formSchema = useFormSchema();
 
   const { addEvent } = useEvents();
@@ -120,12 +121,13 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
       ...values,
       date: format(values.date, "yyyy-MM-dd"),
       photoDataUri,
+      locale,
     };
 
     try {
       const result = await generateSynchronicityInsights(inputForAI);
       onInsightGenerated(result);
-      addEvent({ ...inputForAI, insight: result.insight });
+      addEvent({ ...values, date: format(values.date, "yyyy-MM-dd"), insight: result.insight });
       toast({
         title: tToast('eventRecordedTitle'),
         description: tToast('eventRecordedDescription'),

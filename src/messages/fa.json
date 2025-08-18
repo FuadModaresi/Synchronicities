@@ -1,0 +1,79 @@
+
+{
+  "Sidebar": {
+    "title": "همزمانی‌ها",
+    "eventEntry": "ورود رویداد",
+    "dashboard": "داشبورد",
+    "help": "راهنما و پشتیبانی",
+    "settings": "تنظیمات"
+  },
+  "HomePage": {
+    "title": "یک همزمانی را ثبت کنید",
+    "description": "امروز چه اتفاق معناداری در مسیر شما قرار گرفته است؟ جزئیات را ثبت کنید تا الگوهای پنهان را کشف کنید.",
+    "insightLoading": "در حال تولید بینش...",
+    "insightPlaceholderTitle": "بینش شما در اینجا ظاهر خواهد شد",
+    "insightPlaceholderDescription": "فرم را پر کنید و هوش مصنوعی ما تفسیری از رویداد همزمانی شما ارائه خواهد داد."
+  },
+  "EventForm": {
+    "numberLabel": "عدد / نشانه",
+    "numberPlaceholder": "مثال: ۱۱۱۱، ۴۴۴",
+    "dateLabel": "تاریخ",
+    "pickDate": "یک تاریخ انتخاب کنید",
+    "timeLabel": "زمان",
+    "locationLabel": "مکان",
+    "locationPlaceholder": "مثال: در یک کافی شاپ",
+    "emotionalStateLabel": "وضعیت احساسی شما",
+    "emotionalStatePlaceholder": "مثال: امیدوار، کنجکاو، پراسترس",
+    "emotionalStateDescription": "در آن لحظه چه احساسی داشتید؟",
+    "photoLabel": "عکس (اختیاری)",
+    "peoplePresentLabel": "افراد حاضر (اختیاری)",
+    "peoplePresentPlaceholder": "مثال: دوست، شریک، غریبه",
+    "additionalDetailsLabel": "جزئیات بیشتر (اختیاری)",
+    "additionalDetailsPlaceholder": "جزئیات دیگری وجود دارد؟ مثال: به چه چیزی فکر می‌کردید؟",
+    "submitButton": "ذخیره و تولید بینش",
+    "submitButtonLoading": "در حال تولید بینش...",
+    "numberRequired": "وارد کردن عدد یا نشانه الزامی است.",
+    "numberPositive": "عدد باید مثبت باشد.",
+    "dateRequired": "وارد کردن تاریخ الزامی است.",
+    "invalidTime": "فرمت زمان نامعتبر است (HH:mm)",
+    "locationRequired": "وارد کردن مکان الزامی است.",
+    "emotionalStateRequired": "وارد کردن وضعیت احساسی الزامی است."
+  },
+  "InsightCard": {
+    "title": "بینش هوش مصنوعی",
+    "description": "در اینجا یک معنای بالقوه پشت تجربه شما وجود دارد."
+  },
+  "DashboardPage": {
+    "title": "داشبورد الگوهای شما",
+    "description": "ارتباطات و ریتم‌های دفترچه همزمانی خود را کشف کنید.",
+    "totalEvents": "کل رویدادها",
+    "totalEventsDescription": "رویداد همزمانی ثبت شده",
+    "mostFrequentNumber": "بیشترین عدد تکرار شده",
+    "mostFrequentNumberDescription": "شایع‌ترین نشانه شماست",
+    "numberFrequencyTitle": "فرکانس اعداد",
+    "numberFrequencyDescription": "۱۰ عدد یا نشانه برتر که بیشترین تکرار را داشته‌اند.",
+    "comingSoonTitle": "به زودی: خط زمانی احساسی",
+    "comingSoonDescription": "چگونگی ارتباط وضعیت احساسی شما با رویدادهای همزمانی در طول زمان را به تصویر بکشید.",
+    "comingSoonPlaceholder": "نمودار تحلیلی در اینجا در دسترس خواهد بود.",
+    "eventHistoryTitle": "تاریخچه رویداد"
+  },
+  "HistoryTable": {
+    "noEventsTitle": "هنوز رویدادی ثبت نشده است",
+    "noEventsDescription": "با ثبت اولین رویداد همزمانی خود در صفحه اصلی شروع کنید.",
+    "number": "عدد",
+    "date": "تاریخ",
+    "location": "مکان",
+    "emotion": "احساس",
+    "aiInsight": "بینش هوش مصنوعی",
+    "peoplePresent": "افراد حاضر",
+    "additionalDetails": "جزئیات بیشتر",
+    "photo": "عکس"
+  },
+  "Toasts": {
+    "imageError": "پردازش فایل تصویر ممکن نبود.",
+    "eventRecordedTitle": "رویداد ثبت شد",
+    "eventRecordedDescription": "همزمانی و بینش آن ذخیره شد.",
+    "aiErrorTitle": "خطای هوش مصنوعی",
+    "aiErrorDescription": "تولید بینش برای این رویداد ممکن نبود."
+  }
+}
