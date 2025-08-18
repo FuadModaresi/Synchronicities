@@ -19,12 +19,15 @@ function getFirebaseAdminApp(): App {
     }
 
     if (process.env.GOOGLE_APPLICATION_CREDENTIALS) {
-        const serviceAccount = JSON.parse(
-          Buffer.from(process.env.GOOGLE_APPLICATION_CREDENTIALS, 'base64').toString('utf8')
-        );
-        return initializeApp({
-            credential: cert(serviceAccount)
-        });
+        try {
+            const serviceAccount = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS);
+            return initializeApp({
+                credential: cert(serviceAccount)
+            });
+        } catch (e: any) {
+            console.error('Error parsing GOOGLE_APPLICATION_CREDENTIALS:', e);
+            throw new Error('Firebase Admin SDK credentials failed to parse.');
+        }
     }
 
     return initializeApp();
