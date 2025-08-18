@@ -16,6 +16,10 @@ export const pathnames = {
   '/help': {
     en: '/help',
     fa: '/help',
+  },
+  '/settings': {
+    en: '/settings',
+    fa: '/settings',
   }
 } satisfies Record<string, any>;
 

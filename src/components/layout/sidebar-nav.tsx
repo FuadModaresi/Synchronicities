@@ -77,9 +77,15 @@ export function SidebarNav() {
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton>
-              <Settings />
-              <span>{t('settings')}</span>
+            <SidebarMenuButton
+                asChild
+                isActive={isActive('/settings')}
+                tooltip={{ children: t('settings') }}
+            >
+              <Link href="/settings">
+                <Settings />
+                <span>{t('settings')}</span>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

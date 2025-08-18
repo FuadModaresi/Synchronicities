@@ -76,7 +76,13 @@
     "eventRecordedTitle": "رویداد ثبت شد",
     "eventRecordedDescription": "همزمانی و بینش آن ذخیره شد.",
     "aiErrorTitle": "خطای هوش مصنوعی",
-    "aiErrorDescription": "تولید بینش برای این رویداد ممکن نبود."
+    "aiErrorDescription": "تولید بینش برای این رویداد ممکن نبود.",
+    "exportErrorTitle": "رویدادی برای خروجی گرفتن وجود ندارد",
+    "exportErrorDescription": "قبل از خروجی گرفتن، چند رویداد ثبت کنید.",
+    "exportSuccessTitle": "خروجی موفقیت‌آمیز بود",
+    "exportSuccessDescription": "داده‌های رویداد شما دانلود شد.",
+    "deleteSuccessTitle": "داده‌ها حذف شد",
+    "deleteSuccessDescription": "تمام داده‌های رویداد شما پاک شد."
   },
   "HelpPage": {
     "title": "راهنما و پشتیبانی",
@@ -107,5 +113,18 @@
     "benefitsItem1": "افزایش آگاهی: نسبت به همزمانی‌هایی که در اطراف شما رخ می‌دهد، هشیارتر شوید.",
     "benefitsItem2": "بینش شخصی: درک عمیق‌تری از مسیر زندگی، چالش‌ها و فرصت‌های خود به دست آورید.",
     "benefitsItem3": "ذهن‌آگاهی: تمرین ثبت رویدادها حس حضور و ارتباط بیشتر با جهان را تقویت می‌کند."
+  },
+  "SettingsPage": {
+    "title": "تنظیمات",
+    "description": "حساب کاربری و تنظیمات داده خود را مدیریت کنید.",
+    "profileDescription": "این اطلاعات از طریق حساب گوگل شما مدیریت می‌شود.",
+    "dataManagementTitle": "مدیریت داده‌ها",
+    "dataManagementDescription": "داده‌های رویداد شخصی خود را خروجی بگیرید یا حذف کنید.",
+    "exportButton": "خروجی تمام رویدادها به JSON",
+    "deleteButton": "حذف تمام داده‌های رویداد",
+    "deleteConfirmTitle": "آیا کاملاً مطمئن هستید؟",
+    "deleteConfirmDescription": "این عمل قابل بازگشت نیست. با این کار تمام رویدادهای همزمانی شما برای همیشه حذف خواهد شد. حساب کاربری شما تحت تأثیر قرار نخواهد گرفت.",
+    "cancel": "لغو",
+    "confirm": "بله، همه چیز حذف شود"
   }
 }

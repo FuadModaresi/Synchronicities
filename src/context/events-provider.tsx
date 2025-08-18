@@ -9,6 +9,7 @@ import { useAuth } from "./auth-provider";
 interface EventsContextType {
   events: SynchronicityEvent[];
   addEvent: (event: Omit<SynchronicityEvent, "id">) => void;
+  clearEvents: () => void;
 }
 
 export const EventsContext = createContext<EventsContextType | undefined>(
@@ -55,9 +56,14 @@ export function EventsProvider({ children }: { children: ReactNode }) {
       ...prevEvents,
     ]);
   }, []);
+  
+  const clearEvents = useCallback(() => {
+    setEvents([]);
+  }, []);
+
 
   return (
-    <EventsContext.Provider value={{ events, addEvent }}>
+    <EventsContext.Provider value={{ events, addEvent, clearEvents }}>
       {children}
     </EventsContext.Provider>
   );

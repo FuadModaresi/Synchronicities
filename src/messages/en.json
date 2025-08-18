@@ -76,7 +76,13 @@
     "eventRecordedTitle": "Event Recorded",
     "eventRecordedDescription": "Your synchronicity and its insight have been saved.",
     "aiErrorTitle": "AI Error",
-    "aiErrorDescription": "Could not generate an insight for this event."
+    "aiErrorDescription": "Could not generate an insight for this event.",
+    "exportErrorTitle": "No Events to Export",
+    "exportErrorDescription": "Record some events before exporting.",
+    "exportSuccessTitle": "Export Successful",
+    "exportSuccessDescription": "Your event data has been downloaded.",
+    "deleteSuccessTitle": "Data Deleted",
+    "deleteSuccessDescription": "All your event data has been cleared."
   },
   "HelpPage": {
     "title": "Help & Support",
@@ -107,5 +113,18 @@
     "benefitsItem1": "Increased Awareness: Become more attuned to the synchronicities happening around you.",
     "benefitsItem2": "Personal Insight: Gain a deeper understanding of your life's path, challenges, and opportunities.",
     "benefitsItem3": "Mindfulness: The practice of recording events fosters a greater sense of presence and connection to the world."
+  },
+   "SettingsPage": {
+    "title": "Settings",
+    "description": "Manage your account and data preferences.",
+    "profileDescription": "This information is managed via your Google Account.",
+    "dataManagementTitle": "Data Management",
+    "dataManagementDescription": "Export or delete your personal event data.",
+    "exportButton": "Export All Events to JSON",
+    "deleteButton": "Delete All Event Data",
+    "deleteConfirmTitle": "Are you absolutely sure?",
+    "deleteConfirmDescription": "This action cannot be undone. This will permanently delete all your synchronicity events. Your account will not be affected.",
+    "cancel": "Cancel",
+    "confirm": "Yes, delete everything"
   }
 }
