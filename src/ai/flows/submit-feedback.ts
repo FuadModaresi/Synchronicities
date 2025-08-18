@@ -11,25 +11,26 @@
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 import { getFirestore } from 'firebase-admin/firestore';
-import { getApps, initializeApp, cert } from 'firebase-admin/app';
+import { getApps, initializeApp, cert, App } from 'firebase-admin/app';
 
-// Initialize Firebase Admin SDK if not already initialized
-if (!getApps().length) {
-    // In a real production environment, use application default credentials
-    // or a service account from environment variables.
-    // For this prototype, we check for credentials, but actual credentials
-    // would need to be securely managed in a real deployment.
-    if (process.env.GOOGLE_APPLICATION_CREDENTIALS) {
-        initializeApp({
-            credential: cert(JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS))
-        });
-    } else {
-        // Fallback for local development without service account file
-        initializeApp();
+function getFirebaseAdminApp(): App {
+    if (getApps().length > 0) {
+        return getApps()[0];
     }
+
+    if (process.env.GOOGLE_APPLICATION_CREDENTIALS) {
+        const serviceAccount = JSON.parse(
+          Buffer.from(process.env.GOOGLE_APPLICATION_CREDENTIALS, 'base64').toString('utf8')
+        );
+        return initializeApp({
+            credential: cert(serviceAccount)
+        });
+    }
+
+    return initializeApp();
 }
 
-const firestoreDb = getFirestore();
+const firestoreDb = getFirestore(getFirebaseAdminApp());
 
 
 const SubmitFeedbackInputSchema = z.object({
