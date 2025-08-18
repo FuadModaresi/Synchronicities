@@ -51,9 +51,11 @@
     "mostFrequentNumberDescription": "is your most common sign",
     "numberFrequencyTitle": "Number Frequency",
     "numberFrequencyDescription": "Top 10 most frequently recorded numbers or signs.",
-    "comingSoonTitle": "Coming Soon: Emotional Timeline",
-    "comingSoonDescription": "Visualize how your emotional state correlates with synchronicity events over time.",
-    "comingSoonPlaceholder": "Analytics chart will be available here.",
+    "biggerPictureTitle": "The Bigger Picture",
+    "biggerPictureDescription": "An AI-powered analysis of your entire event history.",
+    "analysisLoading": "Analyzing your history...",
+    "analysisError": "Could not generate an analysis at this time.",
+    "noEventsPlaceholder": "Record events to generate an analysis.",
     "eventHistoryTitle": "Event History"
   },
   "HistoryTable": {

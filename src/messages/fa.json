@@ -52,9 +52,11 @@
     "mostFrequentNumberDescription": "شایع‌ترین نشانه شماست",
     "numberFrequencyTitle": "فرکانس اعداد",
     "numberFrequencyDescription": "۱۰ عدد یا نشانه برتر که بیشترین تکرار را داشته‌اند.",
-    "comingSoonTitle": "به زودی: خط زمانی احساسی",
-    "comingSoonDescription": "چگونگی ارتباط وضعیت احساسی شما با رویدادهای همزمانی در طول زمان را به تصویر بکشید.",
-    "comingSoonPlaceholder": "نمودار تحلیلی در اینجا در دسترس خواهد بود.",
+    "biggerPictureTitle": "تصویر بزرگتر",
+    "biggerPictureDescription": "تحلیل مبتنی بر هوش مصنوعی از کل تاریخچه رویدادهای شما.",
+    "analysisLoading": "در حال تحلیل تاریخچه شما...",
+    "analysisError": "در حال حاضر امکان تولید تحلیل وجود ندارد.",
+    "noEventsPlaceholder": "برای تولید تحلیل، رویدادها را ثبت کنید.",
     "eventHistoryTitle": "تاریخچه رویداد"
   },
   "HistoryTable": {

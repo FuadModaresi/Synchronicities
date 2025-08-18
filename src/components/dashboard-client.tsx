@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useEvents } from "@/hooks/use-events";
 import { HistoryTable } from "@/components/history-table";
 import {
@@ -18,8 +18,9 @@ import {
   ChartConfig
 } from "@/components/ui/chart";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts";
-import { BarChart3, TrendingUp } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { BarChart3, TrendingUp, Sparkles, BrainCircuit } from "lucide-react";
+import { useTranslations, useLocale } from "next-intl";
+import { generateDashboardInsights, type GenerateDashboardInsightsOutput } from "@/ai/flows/generate-dashboard-insights";
 
 
 const chartConfig = {
@@ -31,7 +32,33 @@ const chartConfig = {
 
 export function DashboardClient() {
   const t = useTranslations('DashboardPage');
+  const locale = useLocale();
   const { events } = useEvents();
+  const [analysis, setAnalysis] = useState<GenerateDashboardInsightsOutput | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchAnalysis = async () => {
+      if (events.length > 0) {
+        setIsLoading(true);
+        try {
+          const result = await generateDashboardInsights({ events, locale });
+          setAnalysis(result);
+        } catch (error) {
+          console.error("Error generating dashboard analysis:", error);
+          setAnalysis({ analysis: t('analysisError') });
+        } finally {
+          setIsLoading(false);
+        }
+      } else {
+        setIsLoading(false);
+        setAnalysis(null);
+      }
+    };
+
+    fetchAnalysis();
+  }, [events, locale, t]);
+
 
   const numberFrequency = useMemo(() => {
     const counts: { [key: number]: number } = {};
@@ -107,16 +134,28 @@ export function DashboardClient() {
         </Card>
          <Card className="flex flex-col">
           <CardHeader>
-            <CardTitle className="font-headline text-2xl">{t('comingSoonTitle')}</CardTitle>
+            <CardTitle className="font-headline text-2xl flex items-center gap-2">
+              <BrainCircuit className="w-6 h-6 text-primary"/>
+              {t('biggerPictureTitle')}
+            </CardTitle>
             <CardDescription>
-              {t('comingSoonDescription')}
+              {t('biggerPictureDescription')}
             </CardDescription>
           </CardHeader>
           <CardContent className="flex-grow flex items-center justify-center">
-             <div className="text-center text-muted-foreground">
-                <TrendingUp className="h-12 w-12 mx-auto mb-4" />
-                <p>{t('comingSoonPlaceholder')}</p>
-             </div>
+             {isLoading ? (
+                <div className="text-center text-muted-foreground animate-pulse">
+                  <Sparkles className="h-12 w-12 mx-auto mb-4 text-primary" />
+                  <p>{t('analysisLoading')}</p>
+                </div>
+              ) : analysis ? (
+                <p className="text-sm text-foreground/90 leading-relaxed">{analysis.analysis}</p>
+              ) : (
+                 <div className="text-center text-muted-foreground">
+                    <BarChart3 className="h-12 w-12 mx-auto mb-4" />
+                    <p>{t('noEventsPlaceholder')}</p>
+                 </div>
+              )}
           </CardContent>
         </Card>
       </div>
