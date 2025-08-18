@@ -65,9 +65,15 @@ export function SidebarNav() {
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton>
-              <HelpCircle />
-              <span>{t('help')}</span>
+            <SidebarMenuButton 
+                asChild 
+                isActive={isActive('/help')}
+                tooltip={{ children: t('help') }}
+            >
+              <Link href="/help">
+                <HelpCircle />
+                <span>{t('help')}</span>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
