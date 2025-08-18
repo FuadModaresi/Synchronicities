@@ -11,25 +11,16 @@
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 import { getFirestore } from 'firebase-admin/firestore';
-import { getApps, initializeApp, cert, App } from 'firebase-admin/app';
+import { getApps, initializeApp, type App } from 'firebase-admin/app';
 
+// This function initializes and returns the Firebase Admin App instance.
+// It ensures that the app is initialized only once.
 function getFirebaseAdminApp(): App {
     if (getApps().length > 0) {
         return getApps()[0];
     }
-
-    if (process.env.GOOGLE_APPLICATION_CREDENTIALS) {
-        try {
-            const serviceAccount = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS);
-            return initializeApp({
-                credential: cert(serviceAccount)
-            });
-        } catch (e: any) {
-            console.error('Error parsing GOOGLE_APPLICATION_CREDENTIALS:', e);
-            throw new Error('Firebase Admin SDK credentials failed to parse.');
-        }
-    }
-
+    // If GOOGLE_APPLICATION_CREDENTIALS is set, Firebase Admin SDK will automatically
+    // use it to initialize, so we don't need to pass any credential options.
     return initializeApp();
 }
 
