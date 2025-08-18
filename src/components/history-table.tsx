@@ -75,10 +75,16 @@ export function HistoryTable({ events }: HistoryTableProps) {
             <AccordionContent>
               <div className="bg-muted/50 p-4 -mt-4">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    {event.insight && <div className="md:col-span-2">
-                        <h4 className="font-semibold mb-2">{t('aiInsight')}</h4>
-                        <p className="text-sm text-muted-foreground">{event.insight}</p>
-                    </div>}
+                    <div className="space-y-4 md:col-span-2">
+                        {event.insight && <div>
+                            <h4 className="font-semibold mb-2">{t('aiInsight')}</h4>
+                            <p className="text-sm text-muted-foreground">{event.insight}</p>
+                        </div>}
+                        {event.myInterpretation && <div>
+                            <h4 className="font-semibold mb-2">{t('myInterpretation')}</h4>
+                            <p className="text-sm text-muted-foreground">{event.myInterpretation}</p>
+                        </div>}
+                    </div>
                     <div className="space-y-2">
                         {event.peoplePresent && <div>
                             <h4 className="font-semibold text-sm">{t('peoplePresent')}</h4>

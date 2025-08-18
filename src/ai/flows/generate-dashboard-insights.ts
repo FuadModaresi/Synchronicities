@@ -23,6 +23,7 @@ const EventSchema = z.object({
   peoplePresent: z.string().optional(),
   additionalDetails: z.string().optional(),
   insight: z.string().optional(),
+  myInterpretation: z.string().optional(),
 });
 
 const GenerateDashboardInsightsInputSchema = z.object({
@@ -49,6 +50,7 @@ export async function generateDashboardInsights(input: GenerateDashboardInsights
       peoplePresent: e.peoplePresent,
       additionalDetails: e.additionalDetails,
       insight: e.insight,
+      myInterpretation: e.myInterpretation,
   }));
   return generateDashboardInsightsFlow({ events: eventsForAI, locale: input.locale });
 }
@@ -63,13 +65,14 @@ Look for the following:
 - **Recurring Numbers/Signs:** Are there numbers or symbols that appear frequently? What might they signify collectively?
 - **Emotional Themes:** What is the overarching emotional state across these events (e.g., hope, anxiety, curiosity)? How do the events correlate with these feelings?
 - **Contextual Patterns:** Do events cluster around certain locations, times, or the presence of specific people?
-- **Overarching Message:** Based on the entire history, what is the core message or theme the universe might be communicating to this person? What should they focus on or be mindful of?
+- **User's Own Reflections:** Pay close attention to the user's own interpretations. How do they align with the events? What themes emerge from their reflections?
+- **Overarching Message:** Based on the entire history, including the user's own thoughts, what is the core message or theme the universe might be communicating to this person? What should they focus on or be mindful of?
 
 Provide a concise, holistic, and encouraging analysis. Avoid simply listing the events. Instead, synthesize the information into a cohesive narrative.
 
 Here is the user's event history:
 {{#each events}}
-- Number/Sign: {{this.number}}, Date: {{this.date}} at {{this.time}}, Location: {{this.location}}, Emotion: {{this.emotionalState}}{{#if this.peoplePresent}}, People: {{this.peoplePresent}}{{/if}}{{#if this.additionalDetails}}, Details: {{this.additionalDetails}}{{/if}}{{#if this.insight}}, AI Insight: {{this.insight}}{{/if}}
+- Number/Sign: {{this.number}}, Date: {{this.date}} at {{this.time}}, Location: {{this.location}}, Emotion: {{this.emotionalState}}{{#if this.peoplePresent}}, People: {{this.peoplePresent}}{{/if}}{{#if this.additionalDetails}}, Details: {{this.additionalDetails}}{{/if}}{{#if this.myInterpretation}}, User's Interpretation: {{this.myInterpretation}}{{/if}}{{#if this.insight}}, AI Insight: {{this.insight}}{{/if}}
 {{/each}}
 
 Respond in {{{locale}}}.`,

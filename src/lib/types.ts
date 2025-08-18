@@ -9,4 +9,5 @@ export interface SynchronicityEvent {
   peoplePresent?: string;
   additionalDetails?: string;
   insight?: string;
+  myInterpretation?: string;
 }

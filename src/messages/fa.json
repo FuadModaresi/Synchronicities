@@ -30,6 +30,9 @@
     "peoplePresentPlaceholder": "مثال: دوست، شریک، غریبه",
     "additionalDetailsLabel": "جزئیات بیشتر (اختیاری)",
     "additionalDetailsPlaceholder": "جزئیات دیگری وجود دارد؟ مثال: به چه چیزی فکر می‌کردید؟",
+    "myInterpretationLabel": "تفسیر من (اختیاری)",
+    "myInterpretationPlaceholder": "فکر می‌کنید این رویداد چه معنایی داشت؟",
+    "myInterpretationDescription": "تأمل شخصی شما می‌تواند زمینه قدرتمندی را فراهم کند.",
     "submitButton": "ذخیره و تولید بینش",
     "submitButtonLoading": "در حال تولید بینش...",
     "numberRequired": "وارد کردن عدد یا نشانه الزامی است.",
@@ -67,6 +70,7 @@
     "location": "مکان",
     "emotion": "احساس",
     "aiInsight": "بینش هوش مصنوعی",
+    "myInterpretation": "تفسیر من",
     "peoplePresent": "افراد حاضر",
     "additionalDetails": "جزئیات بیشتر",
     "photo": "عکس"

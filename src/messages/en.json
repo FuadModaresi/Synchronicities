@@ -30,6 +30,9 @@
     "peoplePresentPlaceholder": "e.g., Friend, partner, stranger",
     "additionalDetailsLabel": "Additional Details (Optional)",
     "additionalDetailsPlaceholder": "Any other details? e.g., What were you thinking about?",
+    "myInterpretationLabel": "My Interpretation (Optional)",
+    "myInterpretationPlaceholder": "What do you think this event meant?",
+    "myInterpretationDescription": "Your own reflection can provide powerful context.",
     "submitButton": "Save & Generate Insight",
     "submitButtonLoading": "Generating Insight...",
     "numberRequired": "A number or sign is required.",
@@ -67,6 +70,7 @@
     "location": "Location",
     "emotion": "Emotion",
     "aiInsight": "AI Insight",
+    "myInterpretation": "My Interpretation",
     "peoplePresent": "People Present",
     "additionalDetails": "Additional Details",
     "photo": "Photo"

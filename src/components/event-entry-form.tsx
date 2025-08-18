@@ -14,6 +14,7 @@ import {
   Image as ImageIcon,
   Loader2,
   MapPin,
+  MessageSquareQuote,
   PlusCircle,
   Smile,
   Sparkles,
@@ -63,6 +64,7 @@ const useFormSchema = () => {
         photo: z.any().optional(),
         peoplePresent: z.string().optional(),
         additionalDetails: z.string().optional(),
+        myInterpretation: z.string().optional(),
       });
 }
 
@@ -94,6 +96,7 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
       emotionalState: "",
       peoplePresent: "",
       additionalDetails: "",
+      myInterpretation: "",
     },
   });
 
@@ -140,6 +143,7 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
         peoplePresent: '',
         additionalDetails: '',
         photo: undefined,
+        myInterpretation: '',
       });
     } catch (error) {
       console.error("Error generating insight:", error);
@@ -265,6 +269,30 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
               </FormControl>
               <FormDescription>
                 {t('emotionalStateDescription')}
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="myInterpretation"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>{t('myInterpretationLabel')}</FormLabel>
+              <FormControl>
+                <div className="relative">
+                   <MessageSquareQuote className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                   <Textarea
+                    placeholder={t('myInterpretationPlaceholder')}
+                    {...field}
+                    className="pl-9"
+                  />
+                </div>
+              </FormControl>
+              <FormDescription>
+                {t('myInterpretationDescription')}
               </FormDescription>
               <FormMessage />
             </FormItem>
