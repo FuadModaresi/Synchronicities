@@ -25,7 +25,9 @@
     "emotionalStateLabel": "وضعیت احساسی شما",
     "emotionalStatePlaceholder": "مثال: امیدوار، کنجکاو، پراسترس",
     "emotionalStateDescription": "در آن لحظه چه احساسی داشتید؟",
-    "photoLabel": "عکس",
+    "photoLabel": "عکس (اختیاری)",
+    "uploadTitle": "برای آپلود کلیک کنید",
+    "uploadDesc": "یا بکشید و رها کنید",
     "useCamera": "استفاده از دوربین",
     "useMyLocation": "استفاده از مکان من",
     "backToForm": "بازگشت به فرم",
@@ -144,3 +146,5 @@
     "confirm": "بله، همه چیز حذف شود"
   }
 }
+
+    

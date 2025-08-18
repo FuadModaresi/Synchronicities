@@ -45,7 +45,7 @@ import { cn } from "@/lib/utils";
 import React, { useState, useRef, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { Card, CardContent } from "./ui/card";
-import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 
 const toBase64 = (file: File): Promise<string> =>
@@ -418,7 +418,7 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
           )}
         />
         
-        <div className="space-y-2">
+        <div className="space-y-4">
             <FormLabel>{t('photoLabel')}</FormLabel>
             {capturedImage && (
                 <div className="relative w-fit">
@@ -437,39 +437,49 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
                     </Button>
                 </div>
             )}
-            <div className="flex gap-2">
+            <div className="grid grid-cols-2 gap-4">
                  <FormField
                     control={form.control}
                     name="photo"
                     render={({ field }) => (
-                        <FormItem className="flex-grow">
+                        <FormItem>
                         <FormControl>
-                            <div className="relative">
-                            <ImageIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                            <Input 
-                                type="file" 
-                                accept="image/*" 
-                                {...form.register("photo")} 
-                                className="pl-9 pt-2 text-sm"
-                                onChange={(e) => {
-                                    if (e.target.files && e.target.files[0]) {
-                                        const file = e.target.files[0];
-                                        toBase64(file).then(dataUri => {
-                                            setCapturedImage(dataUri);
-                                            form.setValue('photoDataUri', dataUri);
-                                        });
-                                    }
-                                }}
-                            />
-                            </div>
+                             <label className="flex flex-col items-center justify-center w-full h-24 border-2 border-dashed rounded-lg cursor-pointer bg-muted/50 hover:bg-muted">
+                                <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                                    <ImageIcon className="w-8 h-8 mb-2 text-muted-foreground" />
+                                    <p className="mb-2 text-sm text-center text-muted-foreground">
+                                        <span className="font-semibold">{t('uploadTitle')}</span> {t('uploadDesc')}
+                                    </p>
+                                </div>
+                                <Input 
+                                    id="dropzone-file"
+                                    type="file" 
+                                    accept="image/*" 
+                                    className="hidden"
+                                    onChange={(e) => {
+                                        if (e.target.files && e.target.files[0]) {
+                                            const file = e.target.files[0];
+                                            toBase64(file).then(dataUri => {
+                                                setCapturedImage(dataUri);
+                                                form.setValue('photoDataUri', dataUri);
+                                            });
+                                        }
+                                    }}
+                                />
+                            </label>
                         </FormControl>
                         <FormMessage />
                         </FormItem>
                     )}
                     />
-                <Button type="button" variant="outline" onClick={() => setShowCamera(true)}>
-                    <Camera className="mr-2 h-4 w-4" /> {t('useCamera')}
-                </Button>
+                <button type="button" onClick={() => setShowCamera(true)} className="flex flex-col items-center justify-center w-full h-24 border-2 border-dashed rounded-lg cursor-pointer bg-primary/10 hover:bg-primary/20 text-primary">
+                     <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                        <Camera className="w-8 h-8 mb-2" />
+                        <p className="mb-2 text-sm text-center">
+                            <span className="font-semibold">{t('useCamera')}</span>
+                        </p>
+                    </div>
+                </button>
             </div>
         </div>
 
@@ -520,3 +530,5 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
     </Form>
   );
 }
+
+    
