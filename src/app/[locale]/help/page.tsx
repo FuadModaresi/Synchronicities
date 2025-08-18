@@ -2,11 +2,40 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Sparkles, Home, LayoutDashboard, BrainCircuit, BarChart3, Camera, MapPin, Edit } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Sparkles, Home, LayoutDashboard, BrainCircuit, BarChart3, Camera, MapPin, Edit, Star, MessageSquare } from "lucide-react";
+import { useState } from "react";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
 
 export default function HelpPage() {
   const t = useTranslations('HelpPage');
+  const tToast = useTranslations('Toasts');
+  const [rating, setRating] = useState(0);
+  const [feedback, setFeedback] = useState("");
+  const { toast } = useToast();
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (feedback.trim() === '' && rating === 0) {
+        toast({
+            variant: 'destructive',
+            title: t('feedbackErrorTitle'),
+            description: t('feedbackErrorDescription'),
+        });
+        return;
+    }
+    console.log("Feedback submitted:", { rating, feedback });
+    toast({
+        title: t('feedbackSuccessTitle'),
+        description: t('feedbackSuccessDescription'),
+    });
+    setRating(0);
+    setFeedback("");
+  };
+
 
   return (
     <div className="container mx-auto p-4 md:p-8">
@@ -84,6 +113,52 @@ export default function HelpPage() {
                 <li>{t('benefitsItem3')}</li>
             </ul>
           </CardContent>
+        </Card>
+
+        <Card>
+            <CardHeader>
+                <CardTitle className="flex items-center gap-2 font-headline text-2xl">
+                    <MessageSquare className="w-6 h-6 text-primary"/>
+                    {t('feedbackTitle')}
+                </CardTitle>
+                <CardDescription>{t('feedbackDescription')}</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                    <div>
+                        <label className="font-medium text-sm mb-2 block">{t('ratingLabel')}</label>
+                        <div className="flex gap-1">
+                            {[1, 2, 3, 4, 5].map((star) => (
+                                <Button
+                                type="button"
+                                key={star}
+                                variant="ghost"
+                                size="icon"
+                                onClick={() => setRating(star)}
+                                >
+                                <Star
+                                    className={cn(
+                                    "w-6 h-6",
+                                    rating >= star ? "text-yellow-400 fill-yellow-400" : "text-muted-foreground"
+                                    )}
+                                />
+                                </Button>
+                            ))}
+                        </div>
+                    </div>
+                     <div>
+                        <label htmlFor="feedback-message" className="font-medium text-sm mb-2 block">{t('messageLabel')}</label>
+                        <Textarea
+                            id="feedback-message"
+                            placeholder={t('messagePlaceholder')}
+                            value={feedback}
+                            onChange={(e) => setFeedback(e.target.value)}
+                            rows={4}
+                        />
+                    </div>
+                    <Button type="submit">{t('submitButton')}</Button>
+                </form>
+            </CardContent>
         </Card>
       </div>
     </div>

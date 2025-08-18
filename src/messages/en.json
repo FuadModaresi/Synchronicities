@@ -81,7 +81,7 @@
     "peoplePresent": "People Present",
     "additionalDetails": "Additional Details",
     "photo": "Photo",
-    "saveInterpretation": "Save"
+    "saveInterpretation": "Save Interpretation"
   },
   "Toasts": {
     "imageError": "Could not process the image file.",
@@ -100,7 +100,9 @@
     "cameraErrorTitle": "Camera Access Denied",
     "cameraErrorDescription": "Please enable camera permissions in your browser settings.",
     "locationErrorTitle": "Location Access Denied",
-    "locationErrorDescription": "Please enable location permissions to use this feature."
+    "locationErrorDescription": "Please enable location permissions to use this feature.",
+    "feedbackSuccessTitle": "Feedback Received",
+    "feedbackSuccessDescription": "Thank you for your feedback! We appreciate your input."
   },
   "HelpPage": {
     "title": "Help & Support",
@@ -134,9 +136,17 @@
     "benefitsTitle": "Benefits of Using the App",
     "benefitsItem1": "Increased Awareness: Become more attuned to the synchronicities happening around you.",
     "benefitsItem2": "Personal Insight: Gain a deeper understanding of your life's path, challenges, and opportunities.",
-    "benefitsItem3": "Mindfulness: The practice of recording events fosters a greater sense of presence and connection to the world."
+    "benefitsItem3": "Mindfulness: The practice of recording events fosters a greater sense of presence and connection to the world.",
+    "feedbackTitle": "Feedback & Rating",
+    "feedbackDescription": "We'd love to hear your thoughts! How can we improve the app?",
+    "ratingLabel": "Rate your experience",
+    "messageLabel": "Your message",
+    "messagePlaceholder": "Tell us what you think...",
+    "submitButton": "Submit Feedback",
+    "feedbackErrorTitle": "Empty Feedback",
+    "feedbackErrorDescription": "Please provide a message or a rating before submitting."
   },
-   "SettingsPage": {
+  "SettingsPage": {
     "title": "Settings",
     "description": "Manage your account and data preferences.",
     "profileDescription": "This information is managed via your Google Account.",

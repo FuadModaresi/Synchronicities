@@ -81,7 +81,7 @@
     "peoplePresent": "افراد حاضر",
     "additionalDetails": "جزئیات بیشتر",
     "photo": "عکس",
-    "saveInterpretation": "ذخیره"
+    "saveInterpretation": "ذخیره تفسیر"
   },
   "Toasts": {
     "imageError": "پردازش فایل تصویر ممکن نبود.",
@@ -100,7 +100,9 @@
     "cameraErrorTitle": "دسترسی به دوربین رد شد",
     "cameraErrorDescription": "لطفاً مجوزهای دوربین را در تنظیمات مرورگر خود فعال کنید.",
     "locationErrorTitle": "دسترسی به مکان رد شد",
-    "locationErrorDescription": "لطفاً برای استفاده از این ویژگی، مجوزهای مکان را فعال کنید."
+    "locationErrorDescription": "لطفاً برای استفاده از این ویژگی، مجوزهای مکان را فعال کنید.",
+    "feedbackSuccessTitle": "بازخورد دریافت شد",
+    "feedbackSuccessDescription": "از بازخورد شما سپاسگزاریم! ما از نظرات شما قدردانی می‌کنیم."
   },
   "HelpPage": {
     "title": "راهنما و پشتیبانی",
@@ -134,7 +136,15 @@
     "benefitsTitle": "مزایای استفاده از برنامه",
     "benefitsItem1": "افزایش آگاهی: نسبت به همزمانی‌هایی که در اطراف شما رخ می‌دهد، هشیارتر شوید.",
     "benefitsItem2": "بینش شخصی: درک عمیق‌تری از مسیر زندگی، چالش‌ها و فرصت‌های خود به دست آورید.",
-    "benefitsItem3": "ذهن‌آگاهی: تمرین ثبت رویدادها حس حضور و ارتباط بیشتر با جهان را تقویت می‌کند."
+    "benefitsItem3": "ذهن‌آگاهی: تمرین ثبت رویدادها حس حضور و ارتباط بیشتر با جهان را تقویت می‌کند.",
+    "feedbackTitle": "بازخورد و امتیازدهی",
+    "feedbackDescription": "دوست داریم نظرات شما را بشنویم! چگونه می‌توانیم برنامه را بهبود ببخشیم؟",
+    "ratingLabel": "به تجربه خود امتیاز دهید",
+    "messageLabel": "پیام شما",
+    "messagePlaceholder": "نظرات خود را با ما در میان بگذارید...",
+    "submitButton": "ارسال بازخورد",
+    "feedbackErrorTitle": "بازخورد خالی",
+    "feedbackErrorDescription": "لطفاً قبل از ارسال، یک پیام یا امتیاز ارائه دهید."
   },
   "SettingsPage": {
     "title": "تنظیمات",
