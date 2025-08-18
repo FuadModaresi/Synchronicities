@@ -29,6 +29,18 @@ export default function LoginPage() {
     }
   }, [user, loading, router]);
 
+  if (loading) {
+    return (
+        <div className="flex items-center justify-center h-screen">
+            <div>Loading...</div>
+        </div>
+    )
+  }
+
+  // If user is already logged in, this will be blank while redirecting
+  if (user) {
+    return null;
+  }
 
   return (
     <div className="flex items-center justify-center min-h-[calc(100vh-4rem)] bg-background">
