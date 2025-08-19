@@ -11,47 +11,35 @@
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 import { getFirestore } from 'firebase-admin/firestore';
-import { getApps, initializeApp, type App, cert } from 'firebase-admin/app';
-import path from 'path';
-import fs from 'fs';
+import { getApps, initializeApp, type App } from 'firebase-admin/app';
+
 
 // This function initializes and returns the Firebase Admin App instance.
 // It ensures that the app is initialized only once.
-function getFirebaseAdminApp(): App {
+function getFirebaseAdminApp(): App | null {
     if (getApps().length > 0) {
-        console.log("Firebase Admin SDK already initialized.");
         return getApps()[0];
     }
     
-    const credentialsPath = path.join(process.cwd(), 'day-weaver-q3g5q-firebase-adminsdk-fbsvc-52abe06b29.json');
-    console.log(`Attempting to load credentials from: ${credentialsPath}`);
-
     try {
-        if (!fs.existsSync(credentialsPath)) {
-            throw new Error(`Credentials file not found at: ${credentialsPath}`);
-        }
-        const serviceAccount = JSON.parse(fs.readFileSync(credentialsPath, 'utf8'));
-        
-        console.log("Service account credentials loaded successfully. Initializing Firebase Admin SDK...");
-        const app = initializeApp({
-            credential: cert(serviceAccount),
-        });
+        // When no credentials are provided, the SDK attempts to fall back to the
+        // GOOGLE_APPLICATION_CREDENTIALS environment variable.
+        console.log("Attempting to initialize Firebase Admin SDK with default credentials...");
+        const app = initializeApp();
         console.log("Firebase Admin SDK initialized successfully.");
         return app;
 
     } catch (error) {
         console.error("CRITICAL: Failed to initialize Firebase Admin SDK.", error);
-        throw new Error("Could not initialize Firebase Admin SDK due to a credentials error.");
+        return null;
     }
 }
 
 let firestoreDb: ReturnType<typeof getFirestore> | null = null;
-try {
-    firestoreDb = getFirestore(getFirebaseAdminApp());
-} catch (e) {
-    // Error is already logged in getFirebaseAdminApp
+const adminApp = getFirebaseAdminApp();
+if (adminApp) {
+    firestoreDb = getFirestore(adminApp);
 }
-
 
 const SubmitFeedbackInputSchema = z.object({
   rating: z.number().min(0).max(5).describe('The user\'s star rating for the app, from 0 to 5.'),
