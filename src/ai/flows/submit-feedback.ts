@@ -10,39 +10,9 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
+import { firebase } from '@genkit-ai/firebase';
 import { getFirestore } from 'firebase-admin/firestore';
-import { getApps, initializeApp, type App, cert, type ServiceAccount } from 'firebase-admin/app';
 
-// This function initializes and returns the Firebase Admin App instance.
-// It ensures that the app is initialized only once and handles credentials correctly for serverless environments.
-function getFirebaseAdminApp(): App {
-    if (getApps().length > 0) {
-        return getApps()[0];
-    }
-    
-    try {
-        console.log("Initializing Firebase Admin SDK...");
-        const serviceAccountJson = process.env.GOOGLE_APPLICATION_CREDENTIALS;
-        
-        if (!serviceAccountJson) {
-            throw new Error("GOOGLE_APPLICATION_CREDENTIALS environment variable is not set. This is required for server-side operations.");
-        }
-        
-        // Parse the JSON string into a ServiceAccount object
-        const serviceAccount: ServiceAccount = JSON.parse(serviceAccountJson);
-
-        const app = initializeApp({
-            credential: cert(serviceAccount)
-        });
-
-        console.log("Firebase Admin SDK initialized successfully.");
-        return app;
-    } catch (error: any) {
-        console.error("CRITICAL: Firebase Admin SDK initialization failed.", error);
-        // Re-throw the error to ensure the flow fails clearly and provides debug information.
-        throw new Error(`Firebase Admin SDK initialization failed: ${error.message}`);
-    }
-}
 
 const SubmitFeedbackInputSchema = z.object({
   rating: z.number().min(0).max(5).describe('The user\'s star rating for the app, from 0 to 5.'),
@@ -65,19 +35,19 @@ const submitFeedbackFlow = ai.defineFlow(
   },
   async (input) => {
     try {
-      const adminApp = getFirebaseAdminApp();
-      const firestoreDb = getFirestore(adminApp);
-
-      console.log('Attempting to write feedback to Firestore:', input);
-      const feedbackRef = firestoreDb.collection('feedback');
-      await feedbackRef.add({
-        ...input,
-        createdAt: new Date().toISOString(),
+      await firebase(async ({app}) => {
+        console.log('Attempting to write feedback to Firestore with Genkit Firebase plugin.');
+        const firestoreDb = getFirestore(app);
+        const feedbackRef = firestoreDb.collection('feedback');
+        await feedbackRef.add({
+          ...input,
+          createdAt: new Date().toISOString(),
+        });
+        console.log(`Feedback successfully written to Firestore.`);
       });
-      console.log(`Feedback successfully written to Firestore.`);
       return { success: true };
     } catch (error) {
-      console.error('CRITICAL: Error writing feedback to Firestore:', error);
+      console.error('CRITICAL: Error writing feedback to Firestore using Genkit plugin:', error);
       return { success: false };
     }
   }
