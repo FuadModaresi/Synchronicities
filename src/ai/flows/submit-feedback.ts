@@ -11,8 +11,7 @@
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 import { getFirestore } from 'firebase-admin/firestore';
-import { getApps, initializeApp, type App, credential } from 'firebase-admin/app';
-
+import { getApps, initializeApp, type App, cert, type ServiceAccount } from 'firebase-admin/app';
 
 // This function initializes and returns the Firebase Admin App instance.
 // It ensures that the app is initialized only once and handles credentials correctly.
@@ -21,12 +20,26 @@ function getFirebaseAdminApp(): App {
         return getApps()[0];
     }
     
-    // In a Vercel/production environment, GOOGLE_APPLICATION_CREDENTIALS
-    // environment variable should be set. The SDK will automatically use it.
-    console.log("Initializing Firebase Admin SDK...");
-    const app = initializeApp();
-    console.log("Firebase Admin SDK initialized successfully.");
-    return app;
+    try {
+        console.log("Initializing Firebase Admin SDK...");
+        // Vercel/production will use the GOOGLE_APPLICATION_CREDENTIALS env var.
+        const serviceAccountJson = process.env.GOOGLE_APPLICATION_CREDENTIALS;
+        if (!serviceAccountJson) {
+            throw new Error("GOOGLE_APPLICATION_CREDENTIALS environment variable is not set.");
+        }
+        
+        const serviceAccount: ServiceAccount = JSON.parse(serviceAccountJson);
+
+        const app = initializeApp({
+            credential: cert(serviceAccount)
+        });
+        console.log("Firebase Admin SDK initialized successfully.");
+        return app;
+    } catch (error: any) {
+        console.error("CRITICAL: Firebase Admin SDK initialization failed.", error);
+        // Re-throw the error to ensure the flow fails clearly
+        throw new Error(`Firebase Admin SDK initialization failed: ${error.message}`);
+    }
 }
 
 const SubmitFeedbackInputSchema = z.object({
