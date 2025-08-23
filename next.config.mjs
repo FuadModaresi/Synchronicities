@@ -1,9 +1,10 @@
-import type {NextConfig} from 'next';
+
 import withNextIntl from 'next-intl/plugin';
 
 const withNextIntlConfig = withNextIntl('./i18n.ts');
 
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   /* config options here */
   typescript: {
     ignoreBuildErrors: true,
@@ -20,6 +21,15 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
     ],
+  },
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '2mb',
+      serverActions: true,
+    },
+  },
+  serverActions: {
+    bodySizeLimit: '2mb',
   },
 };
 
