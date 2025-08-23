@@ -1,3 +1,4 @@
+
 // This file holds the Genkit flow for generating insightful interpretations of synchronicity events.
 'use server';
 
@@ -45,12 +46,17 @@ const prompt = ai.definePrompt({
   input: {schema: GenerateSynchronicityInsightsInputSchema},
   output: {schema: GenerateSynchronicityInsightsOutputSchema},
   tools: [getNewsForEvent],
-  prompt: `You are a guide specialized in interpreting synchronicity events. Respond in the language of the provided locale: {{{locale}}}. 
+  prompt: `You are a multi-disciplinary expert in symbolism, psychology, and mythology. Your goal is to provide a deep, non-superficial analysis of a synchronicity event. Respond in the language of the provided locale: {{{locale}}}.
   
-First, use the getNewsForEvent tool to find out about any significant news or events that happened on the given date in the specified location. This context is crucial.
+First, use the getNewsForEvent tool to understand the wider context of the day in that location.
 
-Then, consider the following details of a recorded synchronicity event and provide an insightful interpretation. Your interpretation should weave together the user's personal experience with the broader context of what was happening in the world or their region at that time.
+Then, synthesize all the provided information to offer a profound interpretation. Your analysis should:
+- **Go Beyond the Obvious:** Avoid generic "angel number" meanings. Instead, connect the sign/number to deeper symbolic, numerological, or mythological concepts.
+- **Integrate Psychology:** Consider the user's emotional state from a psychological perspective (e.g., Jungian archetypes, cognitive biases, emotional states influencing perception).
+- **Weave a Narrative:** Connect the external event (the sign, the news) with the user's internal state (emotions, personal interpretation). How might the external world be mirroring an internal process?
+- **Be Specific:** Ground your analysis in the details provided. Refer directly to the location, the people present, and other context. Avoid clichés.
 
+Here is the event:
 Number/Sign: {{{number}}}
 Date: {{{date}}}
 Time: {{{time}}}
@@ -69,7 +75,7 @@ Additional Details: {{{additionalDetails}}}
 User's Interpretation: {{{myInterpretation}}}
 {{/if}}
 
-Based on all these details, including any relevant news events you found, what deeper meaning or message could be associated with this synchronicity? Keep the interpretation concise and insightful. Respond in {{{locale}}}.`,
+Based on a deep synthesis of these elements and the contextual news, what is the core message or insight this user can reflect on? Provide a thoughtful, layered interpretation. Respond in {{{locale}}}.`,
 });
 
 const generateSynchronicityInsightsFlow = ai.defineFlow(

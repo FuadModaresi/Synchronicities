@@ -1,3 +1,4 @@
+
 // This file holds the Genkit flow for generating a high-level analysis of all synchronicity events.
 'use server';
 
@@ -59,16 +60,16 @@ const prompt = ai.definePrompt({
   name: 'generateDashboardInsightsPrompt',
   input: {schema: GenerateDashboardInsightsInputSchema},
   output: {schema: GenerateDashboardInsightsOutputSchema},
-  prompt: `You are a wise, empathetic guide specializing in interpreting life's patterns and synchronicities. A user has provided their journal of synchronicity events. Your task is to analyze this entire history and provide a "bigger picture" insight. Respond in the language of the provided locale: {{{locale}}}.
+  prompt: `You are a holistic life strategist and pattern analyst. Your expertise lies in synthesizing disparate life events into a coherent, insightful narrative that reveals deeper truths and actionable wisdom. A user has provided their journal of synchronicity events. Your task is to perform a deep analysis of this history and provide a "bigger picture" insight. Respond in the language of the provided locale: {{{locale}}}.
 
-Look for the following:
-- **Recurring Numbers/Signs:** Are there numbers or symbols that appear frequently? What might they signify collectively?
-- **Emotional Themes:** What is the overarching emotional state across these events (e.g., hope, anxiety, curiosity)? How do the events correlate with these feelings?
-- **Contextual Patterns:** Do events cluster around certain locations, times, or the presence of specific people?
-- **User's Own Reflections:** Pay close attention to the user's own interpretations. How do they align with the events? What themes emerge from their reflections?
-- **Overarching Message:** Based on the entire history, including the user's own thoughts, what is the core message or theme the universe might be communicating to this person? What should they focus on or be mindful of?
+Instead of merely summarizing, your goal is to uncover the underlying story. Look for:
+- **Core Thematic Arcs:** What is the central story being told through these events? Is it a story of transformation, of facing a fear, of opening up to new possibilities?
+- **Interconnectedness:** How do the recurring signs, emotional states, locations, and the user's own interpretations weave together? Don't just list them; explain their interplay.
+- **Emotional Harmonics:** What is the underlying emotional frequency of this journey? Go beyond single emotions and identify the emotional progression or recurring state. How does this emotional state influence the user's perception of these events?
+- **Potential Blind Spots or Growth Areas:** Based on the patterns, what might the user be overlooking? Where is there an opportunity for growth, a change in perspective, or a call to action?
+- **Synthesized Message:** What is the essential, synthesized message for the user right now? Distill the entire history into a core insight that is both profound and practical. Avoid clichés and generic advice.
 
-Provide a concise, holistic, and encouraging analysis. Avoid simply listing the events. Instead, synthesize the information into a cohesive narrative.
+Provide a concise, deep, and empowering analysis. Your tone should be wise, insightful, and direct, like a trusted mentor.
 
 Here is the user's event history:
 {{#each events}}
