@@ -32,44 +32,43 @@ export default function SettingsPage() {
   const { toast } = useToast();
   const [isDeleting, setIsDeleting] = useState(false);
   
-  // State to trigger export
-  const [shouldExport, setShouldExport] = useState(false);
+  // This state prevents hydration errors by ensuring client-only code doesn't run on the server.
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    // This effect runs only on the client-side
-    if (shouldExport) {
-      if (events.length === 0) {
-        toast({
-          title: tToast('exportErrorTitle'),
-          description: tToast('exportErrorDescription'),
-          variant: "destructive",
-        });
-      } else {
-        const jsonString = `data:text/json;charset=utf-8,${encodeURIComponent(
-          JSON.stringify(events, null, 2)
-        )}`;
-        const link = document.createElement("a");
-        link.href = jsonString;
-        link.download = "synchronicities_export.json";
-        link.click();
-        toast({
-            title: tToast('exportSuccessTitle'),
-            description: tToast('exportSuccessDescription'),
-        });
-      }
-      // Reset the trigger
-      setShouldExport(false);
-    }
-  }, [shouldExport, events, toast, tToast]);
+    setIsClient(true);
+  }, []);
+
 
   if (!user) {
-    router.replace('/login');
+    // We can't use router on the server, so we handle it like this
+    if (isClient) {
+        router.replace('/login');
+    }
     return null;
   }
   
   const handleExportClick = () => {
-    // Trigger the effect to run on the client
-    setShouldExport(true);
+    if (events.length === 0) {
+      toast({
+        title: tToast('exportErrorTitle'),
+        description: tToast('exportErrorDescription'),
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    const jsonString = `data:text/json;charset=utf-8,${encodeURIComponent(
+      JSON.stringify(events, null, 2)
+    )}`;
+    const link = document.createElement("a");
+    link.href = jsonString;
+    link.download = "synchronicities_export.json";
+    link.click();
+    toast({
+        title: tToast('exportSuccessTitle'),
+        description: tToast('exportSuccessDescription'),
+    });
   };
 
   const handleDelete = () => {
@@ -117,14 +116,14 @@ export default function SettingsPage() {
                 <CardDescription>{t('dataManagementDescription')}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-                <Button onClick={handleExportClick} variant="outline" className="w-full justify-start gap-2">
+                <Button onClick={handleExportClick} variant="outline" className="w-full justify-start gap-2" disabled={!isClient}>
                     <FileDown className="w-4 h-4" />
                     <span>{t('exportButton')}</span>
                 </Button>
 
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
-                     <Button variant="destructive" className="w-full justify-start gap-2">
+                     <Button variant="destructive" className="w-full justify-start gap-2" disabled={!isClient}>
                         <Trash2 className="w-4 h-4" />
                         <span>{t('deleteButton')}</span>
                     </Button>
