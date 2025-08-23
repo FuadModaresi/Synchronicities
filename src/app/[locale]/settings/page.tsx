@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "@/context/auth-provider";
 import { useEvents } from "@/hooks/use-events";
 import { useRouter } from "@/navigation";
@@ -31,32 +31,45 @@ export default function SettingsPage() {
   const { events, clearEvents } = useEvents();
   const { toast } = useToast();
   const [isDeleting, setIsDeleting] = useState(false);
+  
+  // State to trigger export
+  const [shouldExport, setShouldExport] = useState(false);
+
+  useEffect(() => {
+    // This effect runs only on the client-side
+    if (shouldExport) {
+      if (events.length === 0) {
+        toast({
+          title: tToast('exportErrorTitle'),
+          description: tToast('exportErrorDescription'),
+          variant: "destructive",
+        });
+      } else {
+        const jsonString = `data:text/json;charset=utf-8,${encodeURIComponent(
+          JSON.stringify(events, null, 2)
+        )}`;
+        const link = document.createElement("a");
+        link.href = jsonString;
+        link.download = "synchronicities_export.json";
+        link.click();
+        toast({
+            title: tToast('exportSuccessTitle'),
+            description: tToast('exportSuccessDescription'),
+        });
+      }
+      // Reset the trigger
+      setShouldExport(false);
+    }
+  }, [shouldExport, events, toast, tToast]);
 
   if (!user) {
     router.replace('/login');
     return null;
   }
   
-  const handleExport = () => {
-    if (events.length === 0) {
-      toast({
-        title: tToast('exportErrorTitle'),
-        description: tToast('exportErrorDescription'),
-        variant: "destructive",
-      });
-      return;
-    }
-    const jsonString = `data:text/json;charset=utf-8,${encodeURIComponent(
-      JSON.stringify(events, null, 2)
-    )}`;
-    const link = document.createElement("a");
-    link.href = jsonString;
-    link.download = "synchronicities_export.json";
-    link.click();
-     toast({
-        title: tToast('exportSuccessTitle'),
-        description: tToast('exportSuccessDescription'),
-    });
+  const handleExportClick = () => {
+    // Trigger the effect to run on the client
+    setShouldExport(true);
   };
 
   const handleDelete = () => {
@@ -104,7 +117,7 @@ export default function SettingsPage() {
                 <CardDescription>{t('dataManagementDescription')}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-                <Button onClick={handleExport} variant="outline" className="w-full justify-start gap-2">
+                <Button onClick={handleExportClick} variant="outline" className="w-full justify-start gap-2">
                     <FileDown className="w-4 h-4" />
                     <span>{t('exportButton')}</span>
                 </Button>
