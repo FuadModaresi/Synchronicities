@@ -14,7 +14,7 @@ import { getFirestore } from 'firebase-admin/firestore';
 import { getApps, initializeApp, type App, cert, type ServiceAccount } from 'firebase-admin/app';
 
 // This function initializes and returns the Firebase Admin App instance.
-// It ensures that the app is initialized only once and handles credentials correctly.
+// It ensures that the app is initialized only once and handles credentials correctly for serverless environments.
 function getFirebaseAdminApp(): App {
     if (getApps().length > 0) {
         return getApps()[0];
@@ -28,11 +28,13 @@ function getFirebaseAdminApp(): App {
             throw new Error("GOOGLE_APPLICATION_CREDENTIALS environment variable is not set. This is required for server-side operations.");
         }
         
+        // Parse the JSON string into a ServiceAccount object
         const serviceAccount: ServiceAccount = JSON.parse(serviceAccountJson);
 
         const app = initializeApp({
             credential: cert(serviceAccount)
         });
+
         console.log("Firebase Admin SDK initialized successfully.");
         return app;
     } catch (error: any) {
