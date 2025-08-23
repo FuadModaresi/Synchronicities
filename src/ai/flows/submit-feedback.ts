@@ -25,28 +25,21 @@ export type SubmitFeedbackInput = z.infer<typeof SubmitFeedbackInputSchema>;
 
 // Helper function to initialize Firebase Admin SDK in a serverless environment
 function getFirebaseAdminApp() {
-    if (getApps().length) {
+    if (getApps().length > 0) {
         return getApp();
     }
 
-    let serviceAccount;
-    // Vercel and other environments store the service account JSON as a string
-    // in an environment variable.
-    if (process.env.GOOGLE_APPLICATION_CREDENTIALS) {
-        try {
-            serviceAccount = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS);
-        } catch (e) {
-            console.error("Failed to parse GOOGLE_APPLICATION_CREDENTIALS. Ensure it's a valid JSON string.", e);
-            throw new Error("Invalid service account credentials format.");
-        }
-    } else {
-        // This is a critical configuration error.
-        throw new Error("GOOGLE_APPLICATION_CREDENTIALS environment variable is not set.");
+    // This is the standard way to anuthenticate in a Vercel environment.
+    // It relies on the GOOGLE_APPLICATION_CREDENTIALS environment variable
+    // being set with the JSON content of the service account key.
+    const serviceAccount = process.env.GOOGLE_APPLICATION_CREDENTIALS;
+    if (!serviceAccount) {
+        throw new Error('The GOOGLE_APPLICATION_CREDENTIALS environment variable is not set.');
     }
     
     // Initialize the app with the service account credentials
     return initializeApp({
-        credential: cert(serviceAccount)
+        credential: cert(JSON.parse(serviceAccount))
     });
 }
 
@@ -63,21 +56,26 @@ const submitFeedbackFlow = ai.defineFlow(
   },
   async (input) => {
     try {
-      console.log('Initializing Firebase Admin and attempting to write feedback to Firestore.');
+      console.log('Attempting to initialize Firebase Admin SDK...');
       const adminApp = getFirebaseAdminApp();
+      console.log('Firebase Admin SDK initialized successfully.');
+
+      console.log('Attempting to get Firestore instance...');
       const firestoreDb = getFirestore(adminApp);
+      console.log('Firestore instance retrieved successfully.');
+
       const feedbackRef = firestoreDb.collection('feedback');
+      console.log(`Attempting to write feedback to Firestore for user: ${input.userEmail}`);
       
       await feedbackRef.add({
         ...input,
         createdAt: new Date().toISOString(),
       });
 
-      console.log(`Feedback successfully written to Firestore for user: ${input.userEmail}`);
+      console.log(`Feedback successfully written to Firestore.`);
       return { success: true };
     } catch (error) {
-      // Log the detailed error for debugging in the Vercel logs.
-      console.error('CRITICAL: Error writing feedback to Firestore:', error);
+      console.error('CRITICAL: Error in submitFeedbackFlow:', error);
       return { success: false };
     }
   }
