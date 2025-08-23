@@ -22,10 +22,10 @@ function getFirebaseAdminApp(): App {
     
     try {
         console.log("Initializing Firebase Admin SDK...");
-        // Vercel/production will use the GOOGLE_APPLICATION_CREDENTIALS env var.
         const serviceAccountJson = process.env.GOOGLE_APPLICATION_CREDENTIALS;
+        
         if (!serviceAccountJson) {
-            throw new Error("GOOGLE_APPLICATION_CREDENTIALS environment variable is not set.");
+            throw new Error("GOOGLE_APPLICATION_CREDENTIALS environment variable is not set. This is required for server-side operations.");
         }
         
         const serviceAccount: ServiceAccount = JSON.parse(serviceAccountJson);
@@ -37,7 +37,7 @@ function getFirebaseAdminApp(): App {
         return app;
     } catch (error: any) {
         console.error("CRITICAL: Firebase Admin SDK initialization failed.", error);
-        // Re-throw the error to ensure the flow fails clearly
+        // Re-throw the error to ensure the flow fails clearly and provides debug information.
         throw new Error(`Firebase Admin SDK initialization failed: ${error.message}`);
     }
 }
@@ -68,11 +68,11 @@ const submitFeedbackFlow = ai.defineFlow(
 
       console.log('Attempting to write feedback to Firestore:', input);
       const feedbackRef = firestoreDb.collection('feedback');
-      const docRef = await feedbackRef.add({
+      await feedbackRef.add({
         ...input,
         createdAt: new Date().toISOString(),
       });
-      console.log(`Feedback successfully written to Firestore with document ID: ${docRef.id}.`);
+      console.log(`Feedback successfully written to Firestore.`);
       return { success: true };
     } catch (error) {
       console.error('CRITICAL: Error writing feedback to Firestore:', error);
