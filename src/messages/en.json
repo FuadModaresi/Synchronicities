@@ -66,7 +66,8 @@
     "analysisLoading": "Analyzing your history...",
     "analysisError": "Could not generate an analysis at this time.",
     "noEventsPlaceholder": "Record events to generate an analysis.",
-    "eventHistoryTitle": "Event History"
+    "eventHistoryTitle": "Event History",
+    "listenLabel": "Listen to the analysis"
   },
   "HistoryTable": {
     "noEventsTitle": "No Events Recorded Yet",

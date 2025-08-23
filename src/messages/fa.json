@@ -66,7 +66,8 @@
     "analysisLoading": "در حال تحلیل تاریخچه شما...",
     "analysisError": "در حال حاضر امکان تولید تحلیل وجود ندارد.",
     "noEventsPlaceholder": "برای تولید تحلیل، رویدادها را ثبت کنید.",
-    "eventHistoryTitle": "تاریخچه رویداد"
+    "eventHistoryTitle": "تاریخچه رویداد",
+    "listenLabel": "گوش دادن به تحلیل"
   },
   "HistoryTable": {
     "noEventsTitle": "هنوز رویدادی ثبت نشده است",
