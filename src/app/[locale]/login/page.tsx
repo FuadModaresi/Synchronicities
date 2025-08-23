@@ -2,7 +2,7 @@
 "use client";
 
 import { useRouter } from "@/navigation";
-import { auth } from "@/lib/firebase";
+import { getFirebaseAuth } from "@/lib/firebase";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -17,6 +17,7 @@ export default function LoginPage() {
   const handleSignIn = async () => {
     const provider = new GoogleAuthProvider();
     try {
+      const auth = getFirebaseAuth();
       await signInWithPopup(auth, provider);
     } catch (error) {
       console.error("Error signing in with Google", error);

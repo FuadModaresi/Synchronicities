@@ -18,7 +18,7 @@ import {
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Moon, Sun, LogOut, Languages } from "lucide-react";
 import { useAuth } from "@/context/auth-provider";
-import { auth } from "@/lib/firebase";
+import { getFirebaseAuth } from "@/lib/firebase";
 
 
 const useTheme = () => {
@@ -56,6 +56,7 @@ export function Header() {
     const { user } = useAuth();
 
     const handleLogout = async () => {
+        const auth = getFirebaseAuth();
         await auth.signOut();
         router.push('/login');
     }
