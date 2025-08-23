@@ -11,35 +11,22 @@
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 import { getFirestore } from 'firebase-admin/firestore';
-import { getApps, initializeApp, type App } from 'firebase-admin/app';
-import { credential } from 'firebase-admin';
+import { getApps, initializeApp, type App, credential } from 'firebase-admin/app';
 
 
 // This function initializes and returns the Firebase Admin App instance.
-// It ensures that the app is initialized only once.
-function getFirebaseAdminApp(): App | null {
+// It ensures that the app is initialized only once and handles credentials correctly.
+function getFirebaseAdminApp(): App {
     if (getApps().length > 0) {
         return getApps()[0];
     }
     
-    try {
-        // When no credentials are provided, the SDK attempts to fall back to the
-        // GOOGLE_APPLICATION_CREDENTIALS environment variable.
-        console.log("Attempting to initialize Firebase Admin SDK with default credentials...");
-        const app = initializeApp();
-        console.log("Firebase Admin SDK initialized successfully.");
-        return app;
-
-    } catch (error) {
-        console.error("CRITICAL: Failed to initialize Firebase Admin SDK.", error);
-        return null;
-    }
-}
-
-let firestoreDb: ReturnType<typeof getFirestore> | null = null;
-const adminApp = getFirebaseAdminApp();
-if (adminApp) {
-    firestoreDb = getFirestore(adminApp);
+    // In a Vercel/production environment, GOOGLE_APPLICATION_CREDENTIALS
+    // environment variable should be set. The SDK will automatically use it.
+    console.log("Initializing Firebase Admin SDK...");
+    const app = initializeApp();
+    console.log("Firebase Admin SDK initialized successfully.");
+    return app;
 }
 
 const SubmitFeedbackInputSchema = z.object({
@@ -62,11 +49,10 @@ const submitFeedbackFlow = ai.defineFlow(
     outputSchema: z.object({success: z.boolean()}),
   },
   async (input) => {
-    if (!firestoreDb) {
-        console.error("Firestore DB is not available. Cannot submit feedback.");
-        return { success: false };
-    }
     try {
+      const adminApp = getFirebaseAdminApp();
+      const firestoreDb = getFirestore(adminApp);
+
       console.log('Attempting to write feedback to Firestore:', input);
       const feedbackRef = firestoreDb.collection('feedback');
       const docRef = await feedbackRef.add({
@@ -76,7 +62,7 @@ const submitFeedbackFlow = ai.defineFlow(
       console.log(`Feedback successfully written to Firestore with document ID: ${docRef.id}.`);
       return { success: true };
     } catch (error) {
-      console.error('Error writing feedback to Firestore:', error);
+      console.error('CRITICAL: Error writing feedback to Firestore:', error);
       return { success: false };
     }
   }
