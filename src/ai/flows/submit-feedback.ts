@@ -12,6 +12,7 @@ import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 import { getFirestore } from 'firebase-admin/firestore';
 import { getApps, initializeApp, type App } from 'firebase-admin/app';
+import { credential } from 'firebase-admin';
 
 
 // This function initializes and returns the Firebase Admin App instance.
