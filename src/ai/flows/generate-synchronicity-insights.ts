@@ -75,7 +75,7 @@ Additional Details: {{{additionalDetails}}}
 User's Interpretation: {{{myInterpretation}}}
 {{/if}}
 
-Based on a deep synthesis of these elements and the contextual news, what is the core message or insight this user can reflect on? Provide a thoughtful, layered interpretation. Respond in {{{locale}}}.`,
+Based on a deep synthesis of these elements and the contextual news, what is the core message or insight this user can reflect on? Provide a thoughtful, layered interpretation. Respond only with the final insight, do not add any preamble. Respond in {{{locale}}}.`,
 });
 
 const generateSynchronicityInsightsFlow = ai.defineFlow(
@@ -85,7 +85,16 @@ const generateSynchronicityInsightsFlow = ai.defineFlow(
     outputSchema: GenerateSynchronicityInsightsOutputSchema,
   },
   async input => {
-    const {output} = await prompt(input);
-    return output!;
+    try {
+      const {output} = await prompt(input);
+      if (!output) {
+        throw new Error('AI did not produce an output.');
+      }
+      return output;
+    } catch (error) {
+      console.error('Error in generateSynchronicityInsightsFlow:', error);
+      // Return a user-friendly error message that still fits the schema
+      return { insight: 'An error occurred while generating the insight. The AI model may be temporarily unavailable or the request may have been filtered. Please try again later.' };
+    }
   }
 );
