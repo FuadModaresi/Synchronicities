@@ -32,21 +32,17 @@ export default function SettingsPage() {
   const { toast } = useToast();
   const [isDeleting, setIsDeleting] = useState(false);
   
-  // This state prevents hydration errors by ensuring client-only code doesn't run on the server.
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-
-  if (!user) {
-    // We can't use router on the server, so we handle it like this
-    if (isClient) {
+  useEffect(() => {
+    if (isClient && !user) {
         router.replace('/login');
     }
-    return null;
-  }
+  }, [user, isClient, router]);
   
   const handleExportClick = () => {
     if (events.length === 0) {
@@ -81,6 +77,9 @@ export default function SettingsPage() {
     setIsDeleting(false);
   };
 
+  if (!isClient || !user) {
+    return null; // Render nothing on the server or if not logged in
+  }
 
   return (
     <div className="container mx-auto p-4 md:p-8">
@@ -116,14 +115,14 @@ export default function SettingsPage() {
                 <CardDescription>{t('dataManagementDescription')}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-                <Button onClick={handleExportClick} variant="outline" className="w-full justify-start gap-2" disabled={!isClient}>
+                <Button onClick={handleExportClick} variant="outline" className="w-full justify-start gap-2">
                     <FileDown className="w-4 h-4" />
                     <span>{t('exportButton')}</span>
                 </Button>
 
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
-                     <Button variant="destructive" className="w-full justify-start gap-2" disabled={!isClient}>
+                     <Button variant="destructive" className="w-full justify-start gap-2">
                         <Trash2 className="w-4 h-4" />
                         <span>{t('deleteButton')}</span>
                     </Button>
