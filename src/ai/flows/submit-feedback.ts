@@ -44,6 +44,8 @@ if (adminApp) {
 const SubmitFeedbackInputSchema = z.object({
   rating: z.number().min(0).max(5).describe('The user\'s star rating for the app, from 0 to 5.'),
   feedback: z.string().optional().describe('The user\'s written feedback message.'),
+  userId: z.string().optional().describe('The UID of the authenticated user.'),
+  userEmail: z.string().optional().describe('The email of the authenticated user.'),
 });
 
 export type SubmitFeedbackInput = z.infer<typeof SubmitFeedbackInputSchema>;
