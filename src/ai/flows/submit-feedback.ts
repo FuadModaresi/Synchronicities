@@ -10,7 +10,7 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
-import { firebase } from '@genkit-ai/firebase';
+import {getFirebaseAdminApp} from '@/lib/firebase-admin';
 import { getFirestore } from 'firebase-admin/firestore';
 
 
@@ -35,19 +35,20 @@ const submitFeedbackFlow = ai.defineFlow(
   },
   async (input) => {
     try {
-      await firebase(async ({app}) => {
-        console.log('Attempting to write feedback to Firestore with Genkit Firebase plugin.');
-        const firestoreDb = getFirestore(app);
-        const feedbackRef = firestoreDb.collection('feedback');
-        await feedbackRef.add({
-          ...input,
-          createdAt: new Date().toISOString(),
-        });
-        console.log(`Feedback successfully written to Firestore.`);
+      console.log('Attempting to write feedback to Firestore.');
+      const app = getFirebaseAdminApp();
+      const firestoreDb = getFirestore(app);
+      const feedbackRef = firestoreDb.collection('feedback');
+      
+      await feedbackRef.add({
+        ...input,
+        createdAt: new Date().toISOString(),
       });
+
+      console.log(`Feedback successfully written to Firestore.`);
       return { success: true };
     } catch (error) {
-      console.error('CRITICAL: Error writing feedback to Firestore using Genkit plugin:', error);
+      console.error('CRITICAL: Error writing feedback to Firestore:', error);
       return { success: false };
     }
   }
