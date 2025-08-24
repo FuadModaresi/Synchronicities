@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useMemo, useState, useEffect, useRef } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useEvents } from "@/hooks/use-events";
 import { HistoryTable } from "@/components/history-table";
 import {
@@ -18,11 +18,9 @@ import {
   ChartConfig
 } from "@/components/ui/chart";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts";
-import { BarChart3, TrendingUp, Sparkles, BrainCircuit, Volume2, Loader2 } from "lucide-react";
+import { BarChart3, TrendingUp, Sparkles, BrainCircuit } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
 import { generateDashboardInsights, type GenerateDashboardInsightsOutput } from "@/ai/flows/generate-dashboard-insights";
-import { generateAudioReflection, type GenerateAudioReflectionOutput } from "@/ai/flows/generate-audio-reflection";
-import { Button } from "./ui/button";
 
 
 const chartConfig = {
@@ -38,11 +36,6 @@ export function DashboardClient() {
   const { events } = useEvents();
   const [analysis, setAnalysis] = useState<GenerateDashboardInsightsOutput | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-
-  const [audio, setAudio] = useState<GenerateAudioReflectionOutput | null>(null);
-  const [isAudioLoading, setIsAudioLoading] = useState(false);
-  const audioRef = useRef<HTMLAudioElement>(null);
-
 
   useEffect(() => {
     const fetchAnalysis = async () => {
@@ -81,33 +74,6 @@ export function DashboardClient() {
   const mostFrequentNumber = numberFrequency.length > 0 ? numberFrequency[0].number : 'N/A';
   const totalEvents = events.length;
   
-  const handleListen = async () => {
-    if (!analysis?.analysis) return;
-
-    // If audio is already generated and loaded, just play it
-    if (audio?.audioDataUri && audioRef.current) {
-        audioRef.current.play();
-        return;
-    }
-
-    setIsAudioLoading(true);
-    try {
-        const audioResult = await generateAudioReflection({ text: analysis.analysis });
-        setAudio(audioResult);
-    } catch (error) {
-        console.error("Error generating audio reflection:", error);
-    } finally {
-        setIsAudioLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    if (audio?.audioDataUri && audioRef.current) {
-        audioRef.current.src = audio.audioDataUri;
-        audioRef.current.play();
-    }
-  }, [audio]);
-
   return (
     <div className="space-y-8">
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -173,21 +139,6 @@ export function DashboardClient() {
                     <BrainCircuit className="w-6 h-6 text-primary"/>
                     {t('biggerPictureTitle')}
                 </CardTitle>
-                {analysis && !isLoading && (
-                    <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={handleListen}
-                        disabled={isAudioLoading}
-                        aria-label={t('listenLabel')}
-                    >
-                        {isAudioLoading ? (
-                            <Loader2 className="h-5 w-5 animate-spin" />
-                        ) : (
-                            <Volume2 className="h-5 w-5" />
-                        )}
-                    </Button>
-                )}
             </div>
             <CardDescription>
               {t('biggerPictureDescription')}
@@ -215,7 +166,6 @@ export function DashboardClient() {
         <h2 className="font-headline text-3xl font-bold mb-4">{t('eventHistoryTitle')}</h2>
         <HistoryTable events={events} />
       </div>
-      <audio ref={audioRef} className="hidden" />
     </div>
   );
 }
