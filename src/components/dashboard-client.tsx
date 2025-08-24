@@ -76,7 +76,7 @@ export function DashboardClient() {
   
   return (
     <div className="space-y-8">
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">{t('totalEvents')}</CardTitle>
@@ -104,7 +104,7 @@ export function DashboardClient() {
           </CardContent>
         </Card>
       </div>
-      <div className="grid gap-8 md:grid-cols-2">
+      <div className="grid gap-8 grid-cols-1 md:grid-cols-2">
         <Card>
           <CardHeader>
             <CardTitle className="font-headline text-2xl">{t('numberFrequencyTitle')}</CardTitle>

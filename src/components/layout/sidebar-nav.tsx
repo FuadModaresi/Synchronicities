@@ -18,6 +18,7 @@ import {
   Sparkles,
   Settings,
   HelpCircle,
+  Menu,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 

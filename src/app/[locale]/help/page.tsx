@@ -66,10 +66,10 @@ export default function HelpPage() {
   return (
     <div className="container mx-auto p-4 md:p-8">
       <header className="mb-8 text-center">
-        <h1 className="font-headline text-4xl md:text-5xl font-bold text-foreground mb-2">
+        <h1 className="font-headline text-3xl md:text-5xl font-bold text-foreground mb-2">
           {t('title')}
         </h1>
-        <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
+        <p className="text-muted-foreground text-base md:text-lg max-w-3xl mx-auto">
           {t('description')}
         </p>
       </header>
@@ -77,7 +77,7 @@ export default function HelpPage() {
       <div className="space-y-8">
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 font-headline text-2xl">
+            <CardTitle className="flex items-center gap-2 font-headline text-xl md:text-2xl">
                 <Sparkles className="w-6 h-6 text-primary"/>
                 {t('welcomeTitle')}
             </CardTitle>
@@ -90,7 +90,7 @@ export default function HelpPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 font-headline text-2xl">
+            <CardTitle className="flex items-center gap-2 font-headline text-xl md:text-2xl">
                 <Home className="w-6 h-6 text-primary"/>
                 {t('eventEntryTitle')}
             </CardTitle>
@@ -111,7 +111,7 @@ export default function HelpPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 font-headline text-2xl">
+            <CardTitle className="flex items-center gap-2 font-headline text-xl md:text-2xl">
                 <LayoutDashboard className="w-6 h-6 text-primary"/>
                 {t('dashboardTitle')}
             </CardTitle>
@@ -128,7 +128,7 @@ export default function HelpPage() {
         
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 font-headline text-2xl">
+            <CardTitle className="flex items-center gap-2 font-headline text-xl md:text-2xl">
                 {t('benefitsTitle')}
             </CardTitle>
           </CardHeader>
@@ -143,7 +143,7 @@ export default function HelpPage() {
 
         <Card>
             <CardHeader>
-                <CardTitle className="flex items-center gap-2 font-headline text-2xl">
+                <CardTitle className="flex items-center gap-2 font-headline text-xl md:text-2xl">
                     <MessageSquare className="w-6 h-6 text-primary"/>
                     {t('feedbackTitle')}
                 </CardTitle>

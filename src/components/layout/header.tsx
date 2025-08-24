@@ -2,7 +2,7 @@
 "use client";
 
 import React from "react";
-import { usePathname, useRouter } from "@/navigation";
+import { usePathname, useRouter, Link } from "@/navigation";
 import { useLocale } from "next-intl";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -16,7 +16,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { Moon, Sun, LogOut, Languages } from "lucide-react";
+import { Moon, Sun, LogOut, Languages, Settings, HelpCircle } from "lucide-react";
 import { useAuth } from "@/context/auth-provider";
 import { getFirebaseAuth } from "@/lib/firebase";
 
@@ -112,12 +112,22 @@ export function Header() {
             <DropdownMenuContent align="end">
                 <DropdownMenuLabel>{user.displayName ?? 'My Account'}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Settings</DropdownMenuItem>
-                <DropdownMenuItem>Support</DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/settings">
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span>Settings</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/help">
+                     <HelpCircle className="mr-2 h-4 w-4" />
+                     <span>Support</span>
+                  </Link>
+                </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleLogout}>
                   <LogOut className="mr-2 h-4 w-4" />
-                  Logout
+                  <span>Logout</span>
                 </DropdownMenuItem>
             </DropdownMenuContent>
             </DropdownMenu>

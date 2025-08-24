@@ -290,7 +290,7 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
           )}
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <FormField
             control={form.control}
             name="date"
@@ -356,16 +356,16 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
           render={({ field }) => (
             <FormItem>
               <FormLabel>{t('locationLabel')}</FormLabel>
-              <div className="flex gap-2">
+              <div className="flex flex-col sm:flex-row gap-2">
                 <FormControl>
                     <div className="relative flex-grow">
                     <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                     <Input placeholder={t('locationPlaceholder')} {...field} className="pl-9"/>
                     </div>
                 </FormControl>
-                <Button type="button" variant="outline" onClick={handleLocation} disabled={locationLoading}>
-                    <MapPin className="h-4 w-4" />
-                    <span className="sr-only">{t('useMyLocation')}</span>
+                <Button type="button" variant="outline" onClick={handleLocation} disabled={locationLoading} className="sm:w-auto">
+                    <MapPin className="h-4 w-4 sm:mr-2" />
+                    <span className="sr-only sm:not-sr-only">{t('useMyLocation')}</span>
                      {locationLoading && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}
                 </Button>
               </div>
@@ -437,7 +437,7 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
                     </Button>
                 </div>
             )}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                  <FormField
                     control={form.control}
                     name="photo"

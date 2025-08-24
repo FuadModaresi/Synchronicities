@@ -24,7 +24,7 @@ export default function HomePage() {
 
   return (
     <div className="container mx-auto p-4 md:p-8">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
         <div className="space-y-6">
           <header>
             <h1 className="font-headline text-4xl md:text-5xl font-bold text-foreground mb-2">
@@ -41,7 +41,7 @@ export default function HomePage() {
           />
         </div>
 
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center lg:py-8">
            {isLoading ? (
              <div className="flex flex-col items-center text-center text-muted-foreground">
                <Sparkles className="h-12 w-12 text-primary animate-pulse" />
