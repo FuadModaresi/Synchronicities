@@ -21,12 +21,12 @@ import {
 } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { useTranslations } from "next-intl";
 import { Textarea } from './ui/textarea';
 import { Button } from './ui/button';
 import { Label } from './ui/label';
-import { ChevronDown, PlusCircle, Calendar, Clock, MapPin, Smile } from 'lucide-react';
+import { Calendar, Clock, MapPin, Smile, PlusCircle } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 
