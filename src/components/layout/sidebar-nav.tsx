@@ -10,6 +10,7 @@ import {
   SidebarMenuButton,
   SidebarContent,
   SidebarFooter,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import {
   Home,
@@ -23,13 +24,20 @@ import { useTranslations } from "next-intl";
 export function SidebarNav() {
   const pathname = usePathname();
   const t = useTranslations('Sidebar');
+  const { setOpenMobile, isMobile } = useSidebar();
 
   const isActive = (path: string) => pathname === path;
+
+  const handleLinkClick = () => {
+    if (isMobile) {
+      setOpenMobile(false);
+    }
+  }
 
   return (
     <>
       <SidebarHeader>
-        <Link href="/" className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2" onClick={handleLinkClick}>
           <Sparkles className="w-8 h-8 text-primary" />
           <h1 className="font-headline text-2xl font-bold">{t('title')}</h1>
         </Link>
@@ -41,6 +49,7 @@ export function SidebarNav() {
               asChild
               isActive={isActive("/")}
               tooltip={{ children: t('eventEntry') }}
+              onClick={handleLinkClick}
             >
               <Link href="/">
                 <Home />
@@ -53,6 +62,7 @@ export function SidebarNav() {
               asChild
               isActive={isActive("/dashboard")}
               tooltip={{ children: t('dashboard') }}
+              onClick={handleLinkClick}
             >
               <Link href="/dashboard">
                 <LayoutDashboard />
@@ -69,6 +79,7 @@ export function SidebarNav() {
                 asChild 
                 isActive={isActive('/help')}
                 tooltip={{ children: t('help') }}
+                onClick={handleLinkClick}
             >
               <Link href="/help">
                 <HelpCircle />
@@ -81,6 +92,7 @@ export function SidebarNav() {
                 asChild
                 isActive={isActive('/settings')}
                 tooltip={{ children: t('settings') }}
+                onClick={handleLinkClick}
             >
               <Link href="/settings">
                 <Settings />
