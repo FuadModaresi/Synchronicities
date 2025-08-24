@@ -16,7 +16,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { Moon, Sun, LogOut, Languages, Settings, HelpCircle } from "lucide-react";
+import { Moon, Sun, LogOut, Languages, Settings, HelpCircle, Menu } from "lucide-react";
 import { useAuth } from "@/context/auth-provider";
 import { getFirebaseAuth } from "@/lib/firebase";
 
@@ -68,7 +68,9 @@ export function Header() {
   return (
     <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background/80 backdrop-blur-sm px-4 md:px-6">
       <div className="md:hidden">
-        <SidebarTrigger />
+        <SidebarTrigger>
+            <Menu />
+        </SidebarTrigger>
       </div>
       <div className="flex w-full items-center justify-end gap-2">
         <Button variant="ghost" size="icon" onClick={toggleTheme} aria-label="Toggle theme">
