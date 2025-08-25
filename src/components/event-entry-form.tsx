@@ -3,6 +3,8 @@
 
 import type { GenerateSynchronicityInsightsOutput } from "@/ai/flows/generate-synchronicity-insights";
 import { generateSynchronicityInsights } from "@/ai/flows/generate-synchronicity-insights";
+import type { GeneratePatternAnalysisOutput } from "@/ai/flows/generate-pattern-analysis";
+import { generatePatternAnalysis } from "@/ai/flows/generate-pattern-analysis";
 import { useEvents } from "@/hooks/use-events";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -76,18 +78,26 @@ type FormValues = z.infer<ReturnType<typeof useFormSchema>>;
   
 interface EventEntryFormProps {
   onInsightGenerated: (insight: GenerateSynchronicityInsightsOutput | null) => void;
+  onPatternAnalysisGenerated: (analysis: GeneratePatternAnalysisOutput | null) => void;
   setIsLoading: (loading: boolean) => void;
   isLoading: boolean;
+  setIsPatternLoading: (loading: boolean) => void;
 }
 
 
-export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: EventEntryFormProps) {
+export function EventEntryForm({ 
+    onInsightGenerated,
+    onPatternAnalysisGenerated,
+    setIsLoading, 
+    isLoading,
+    setIsPatternLoading
+}: EventEntryFormProps) {
   const t = useTranslations('EventForm');
   const tToast = useTranslations('Toasts');
   const locale = useLocale();
   const formSchema = useFormSchema();
 
-  const { addEvent } = useEvents();
+  const { events, addEvent } = useEvents();
   const { toast } = useToast();
 
   const [showCamera, setShowCamera] = useState(false);
@@ -209,13 +219,36 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
     };
 
     try {
+      // First, get the primary insight
       const result = await generateSynchronicityInsights(inputForAI);
       onInsightGenerated(result);
-      addEvent({ ...values, date: format(values.date, "yyyy-MM-dd"), photoDataUri, insight: result.insight });
+      
+      const newEventWithInsight = { ...values, date: format(values.date, "yyyy-MM-dd"), photoDataUri, insight: result.insight };
+      addEvent(newEventWithInsight);
+      
       toast({
         title: tToast('eventRecordedTitle'),
         description: tToast('eventRecordedDescription'),
       });
+      
+      // Now, kick off the pattern analysis in the background
+      setIsPatternLoading(true);
+      const pastEventsForAnalysis = events.map(e => ({
+          number: String(e.number),
+          date: e.date,
+          emotionalState: e.emotionalState,
+          myInterpretation: e.myInterpretation,
+          insight: e.insight,
+      }));
+
+      const patternResult = await generatePatternAnalysis({
+        newEvent: inputForAI,
+        pastEvents: pastEventsForAnalysis,
+        locale,
+      });
+      onPatternAnalysisGenerated(patternResult);
+
+
       form.reset({
         ...form.getValues(),
         number: "",
@@ -228,9 +261,11 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
         photoDataUri: '',
       });
       setCapturedImage(null);
+
     } catch (error) {
-      console.error("Error generating insight:", error);
+      console.error("Error during event submission process:", error);
       onInsightGenerated(null);
+      onPatternAnalysisGenerated(null);
       toast({
         title: tToast('aiErrorTitle'),
         description: tToast('aiErrorDescription'),
@@ -238,6 +273,7 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
       });
     } finally {
       setIsLoading(false);
+      setIsPatternLoading(false);
     }
   }
 
@@ -530,5 +566,3 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
     </Form>
   );
 }
-
-    

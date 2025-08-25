@@ -3,23 +3,36 @@
 
 import { useState } from "react";
 import type { GenerateSynchronicityInsightsOutput } from "@/ai/flows/generate-synchronicity-insights";
+import type { GeneratePatternAnalysisOutput } from "@/ai/flows/generate-pattern-analysis";
 import { EventEntryForm } from "@/components/event-entry-form";
 import { InsightCard } from "@/components/insight-card";
+import { PatternAnalysisCard } from "@/components/pattern-analysis-card";
 import { useTranslations } from "next-intl";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Sparkles } from "lucide-react";
+import { Sparkles, History } from "lucide-react";
 
 
 export default function HomePage() {
   const t = useTranslations('HomePage');
   const [isLoading, setIsLoading] = useState(false);
+  const [isPatternLoading, setIsPatternLoading] = useState(false);
   const [insight, setInsight] =
     useState<GenerateSynchronicityInsightsOutput | null>(null);
+  const [patternAnalysis, setPatternAnalysis] =
+    useState<GeneratePatternAnalysisOutput | null>(null);
 
   const handleInsightGenerated = (
     generatedInsight: GenerateSynchronicityInsightsOutput | null
   ) => {
     setInsight(generatedInsight);
+    // Clear previous pattern analysis when a new insight is generated
+    setPatternAnalysis(null);
+  };
+  
+  const handlePatternAnalysisGenerated = (
+    generatedAnalysis: GeneratePatternAnalysisOutput | null
+  ) => {
+    setPatternAnalysis(generatedAnalysis);
   };
 
   return (
@@ -36,12 +49,14 @@ export default function HomePage() {
           </header>
           <EventEntryForm
             onInsightGenerated={handleInsightGenerated}
+            onPatternAnalysisGenerated={handlePatternAnalysisGenerated}
             setIsLoading={setIsLoading}
             isLoading={isLoading}
+            setIsPatternLoading={setIsPatternLoading}
           />
         </div>
 
-        <div className="flex items-center justify-center lg:py-8">
+        <div className="space-y-6 flex flex-col items-center justify-center lg:py-8">
            {isLoading ? (
              <div className="flex flex-col items-center text-center text-muted-foreground">
                <Sparkles className="h-12 w-12 text-primary animate-pulse" />
@@ -61,6 +76,15 @@ export default function HomePage() {
                     </div>
                 </CardContent>
             </Card>
+          )}
+
+          {isPatternLoading ? (
+            <div className="flex flex-col items-center text-center text-muted-foreground pt-6">
+               <History className="h-12 w-12 text-primary animate-pulse" />
+               <p className="mt-4 font-semibold">{t('patternLoading')}</p>
+            </div>
+          ) : patternAnalysis && (
+            <PatternAnalysisCard analysis={patternAnalysis.patternAnalysis} />
           )}
         </div>
       </div>
