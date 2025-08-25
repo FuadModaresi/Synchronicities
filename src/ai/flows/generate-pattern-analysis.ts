@@ -1,3 +1,4 @@
+
 // This file holds the Genkit flow for generating an analysis of patterns between a new event and past events.
 'use server';
 
@@ -11,8 +12,7 @@
 
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
-import type { SynchronicityEvent } from '@/lib/types';
-import { GenerateSynchronicityInsightsInputSchema } from './generate-synchronicity-insights';
+import { GenerateSynchronicityInsightsInputSchema } from '@/ai/schemas';
 
 // Schema for past events, slightly simplified for the AI's purpose.
 const PastEventSchema = z.object({
