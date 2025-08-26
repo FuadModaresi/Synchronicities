@@ -1,6 +1,7 @@
+
 // Import the functions you need from the SDKs you need
 import { initializeApp, getApps, getApp, type FirebaseApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { getAuth, connectAuthEmulator } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -16,18 +17,12 @@ const firebaseConfig = {
   measurementId: "G-RWFEBSWT24"
 };
 
-// Initialize Firebase
-let app: FirebaseApp;
-if (getApps().length === 0) {
-    app = initializeApp(firebaseConfig);
-} else {
-    app = getApp();
-}
-
+// Initialize Firebase for client-side, ensuring it's only done once.
+const app: FirebaseApp = getApps().length ? getApp() : initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
 
-// Correctly initialize Auth for client-side
-const getFirebaseAuth = () => getAuth(app);
-
+// Function to get the auth instance, which is now initialized once.
+const getFirebaseAuth = () => auth;
 
 export { app, db, getFirebaseAuth };
