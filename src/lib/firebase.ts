@@ -8,7 +8,7 @@ import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyC7owJU_Xr8KcZVKEbAeErGfR4WwRd9HqE",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: "day-weaver-q3g5q.firebaseapp.com",
   projectId: "day-weaver-q3g5q",
   storageBucket: "day-weaver-q3g5q.firebasestorage.app",
