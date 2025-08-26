@@ -6,21 +6,25 @@ import { getFirebaseAuth } from "@/lib/firebase";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Sparkles } from "lucide-react";
+import { Sparkles, Loader2 } from "lucide-react";
 import { useAuth } from "@/context/auth-provider";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function LoginPage() {
   const { user, loading } = useAuth();
   const router = useRouter();
+  const [isSigningIn, setIsSigningIn] = useState(false);
 
   const handleSignIn = async () => {
+    setIsSigningIn(true);
     const provider = new GoogleAuthProvider();
     try {
       const auth = getFirebaseAuth();
       await signInWithPopup(auth, provider);
     } catch (error) {
       console.error("Error signing in with Google", error);
+    } finally {
+      setIsSigningIn(false);
     }
   };
 
@@ -57,7 +61,8 @@ export default function LoginPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Button onClick={handleSignIn} className="w-full">
+          <Button onClick={handleSignIn} className="w-full" disabled={isSigningIn}>
+            {isSigningIn && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             Sign in with Google
           </Button>
         </CardContent>
