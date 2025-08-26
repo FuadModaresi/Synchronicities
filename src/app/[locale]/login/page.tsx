@@ -16,6 +16,10 @@ export default function LoginPage() {
 
   const handleSignIn = async () => {
     const provider = new GoogleAuthProvider();
+    // Explicitly request only basic profile and email scopes to avoid triggering
+    // the "unverified app" screen for users.
+    provider.addScope('profile');
+    provider.addScope('email');
     try {
       const auth = getFirebaseAuth();
       await signInWithPopup(auth, provider);
