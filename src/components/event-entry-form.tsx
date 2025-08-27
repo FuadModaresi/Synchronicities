@@ -89,7 +89,8 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
 
   const { addEvent } = useEvents();
   const { toast } = useToast();
-
+  
+  const [isClient, setIsClient] = useState(false);
   const [showCamera, setShowCamera] = useState(false);
   const [hasCameraPermission, setHasCameraPermission] = useState<boolean | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -97,26 +98,25 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
   const [locationLoading, setLocationLoading] = useState(false);
 
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       number: "",
+      date: new Date(),
+      time: format(new Date(), "HH:mm"),
       location: "",
       emotionalState: "",
       peoplePresent: "",
       additionalDetails: "",
       myInterpretation: "",
-      photoDataUri: "",
       photo: undefined,
+      photoDataUri: "",
     },
   });
-
-   useEffect(() => {
-    // Set date and time on client-side to avoid hydration mismatch
-    form.setValue('date', new Date());
-    form.setValue('time', format(new Date(), "HH:mm"));
-   }, [form]);
 
    useEffect(() => {
     if (showCamera) {
@@ -273,6 +273,10 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
             </CardContent>
         </Card>
     )
+  }
+  
+  if (!isClient) {
+    return null; // Or a loading spinner
   }
 
   return (
