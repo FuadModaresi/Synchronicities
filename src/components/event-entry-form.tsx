@@ -110,6 +110,7 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
       additionalDetails: "",
       myInterpretation: "",
       photoDataUri: "",
+      photo: undefined,
     },
   });
 
