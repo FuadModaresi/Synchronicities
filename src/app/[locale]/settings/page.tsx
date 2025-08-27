@@ -2,14 +2,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useAuth } from "@/context/auth-provider";
 import { useEvents } from "@/hooks/use-events";
-import { useRouter } from "@/navigation";
 import { useTranslations } from "next-intl";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { User, FileDown, Trash2, AlertTriangle } from "lucide-react";
+import { FileDown, Trash2, AlertTriangle } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -26,8 +23,6 @@ import { useToast } from "@/hooks/use-toast";
 export default function SettingsPage() {
   const t = useTranslations('SettingsPage');
   const tToast = useTranslations('Toasts');
-  const { user } = useAuth();
-  const router = useRouter();
   const { events, clearEvents } = useEvents();
   const { toast } = useToast();
   const [isDeleting, setIsDeleting] = useState(false);
@@ -38,12 +33,6 @@ export default function SettingsPage() {
     setIsClient(true);
   }, []);
 
-  useEffect(() => {
-    if (isClient && !user) {
-        router.replace('/login');
-    }
-  }, [user, isClient, router]);
-  
   const handleExportClick = () => {
     if (events.length === 0) {
       toast({
@@ -77,8 +66,8 @@ export default function SettingsPage() {
     setIsDeleting(false);
   };
 
-  if (!isClient || !user) {
-    return null; // Render nothing on the server or if not logged in
+  if (!isClient) {
+    return null; 
   }
 
   return (
@@ -93,22 +82,6 @@ export default function SettingsPage() {
       </header>
 
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-        <Card className="md:col-span-1">
-            <CardHeader className="flex flex-row items-center gap-4">
-                 <Avatar className="h-16 w-16">
-                    <AvatarImage src={user.photoURL ?? ""} alt={user.displayName ?? 'user'} />
-                    <AvatarFallback><User /></AvatarFallback>
-                </Avatar>
-                <div>
-                    <CardTitle className="text-2xl">{user.displayName}</CardTitle>
-                    <CardDescription>{user.email}</CardDescription>
-                </div>
-            </CardHeader>
-             <CardContent>
-                <p className="text-sm text-muted-foreground">{t('profileDescription')}</p>
-            </CardContent>
-        </Card>
-
          <Card className="md:col-span-1">
             <CardHeader>
                 <CardTitle className="font-headline text-2xl">{t('dataManagementTitle')}</CardTitle>

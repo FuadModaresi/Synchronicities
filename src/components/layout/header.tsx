@@ -4,21 +4,15 @@
 import React from "react";
 import { usePathname, useRouter } from "@/navigation";
 import { useLocale } from "next-intl";
-
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { Moon, Sun, LogOut, Languages } from "lucide-react";
-import { useAuth } from "@/context/auth-provider";
-import { getFirebaseAuth } from "@/lib/firebase";
+import { Moon, Sun, Languages } from "lucide-react";
 
 
 const useTheme = () => {
@@ -53,14 +47,7 @@ export function Header() {
     const router = useRouter();
     const pathname = usePathname();
     const locale = useLocale();
-    const { user } = useAuth();
 
-    const handleLogout = async () => {
-        const auth = getFirebaseAuth();
-        await auth.signOut();
-        router.push('/login');
-    }
-    
     const handleLocaleChange = (newLocale: 'en' | 'fa') => {
         router.replace(pathname, {locale: newLocale});
     }
@@ -98,32 +85,6 @@ export function Header() {
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
-
-        { user ? (
-            <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="rounded-full">
-                <Avatar>
-                    <AvatarImage src={user.photoURL ?? "https://placehold.co/40x40.png"} alt={user.displayName ?? "User"} />
-                    <AvatarFallback>{user.displayName?.[0] ?? 'U'}</AvatarFallback>
-                </Avatar>
-                </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-                <DropdownMenuLabel>{user.displayName ?? 'My Account'}</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>Settings</DropdownMenuItem>
-                <DropdownMenuItem>Support</DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleLogout}>
-                  <LogOut className="mr-2 h-4 w-4" />
-                  Logout
-                </DropdownMenuItem>
-            </DropdownMenuContent>
-            </DropdownMenu>
-        ) : (
-             <Button onClick={() => router.push('/login')}>Login</Button>
-        )}
       </div>
     </header>
   );

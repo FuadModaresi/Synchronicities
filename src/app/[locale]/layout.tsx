@@ -3,7 +3,6 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages, unstable_setRequestLocale } from 'next-intl/server';
 import { ReactNode } from "react";
 import { EventsProvider } from "@/context/events-provider";
-import { AuthProvider } from "@/context/auth-provider";
 import { MainLayout } from "@/components/layout/main-layout";
 import { Toaster } from "@/components/ui/toaster";
 import "../globals.css";
@@ -30,12 +29,10 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
-      <AuthProvider>
         <EventsProvider>
           <MainLayout>{children}</MainLayout>
           <Toaster />
         </EventsProvider>
-      </AuthProvider>
     </NextIntlClientProvider>
   );
 }

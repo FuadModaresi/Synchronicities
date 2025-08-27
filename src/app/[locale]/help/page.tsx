@@ -10,12 +10,10 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { submitFeedback } from "@/ai/flows/submit-feedback";
-import { useAuth } from "@/context/auth-provider";
 
 export default function HelpPage() {
   const t = useTranslations('HelpPage');
   const tToast = useTranslations('Toasts');
-  const { user } = useAuth();
   const [rating, setRating] = useState(0);
   const [feedback, setFeedback] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -35,9 +33,7 @@ export default function HelpPage() {
     try {
         const result = await submitFeedback({
             rating,
-            feedback,
-            userId: user?.uid,
-            userEmail: user?.email,
+            feedback
         });
 
         if (result.success) {

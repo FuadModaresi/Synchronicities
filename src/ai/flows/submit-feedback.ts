@@ -17,8 +17,6 @@ import { getFirestore } from 'firebase-admin/firestore';
 const SubmitFeedbackInputSchema = z.object({
   rating: z.number().min(0).max(5).describe('The user\'s star rating for the app, from 0 to 5.'),
   feedback: z.string().optional().describe('The user\'s written feedback message.'),
-  userId: z.string().optional().describe('The UID of the authenticated user.'),
-  userEmail: z.string().optional().describe('The email of the authenticated user.'),
 });
 
 export type SubmitFeedbackInput = z.infer<typeof SubmitFeedbackInputSchema>;
@@ -65,7 +63,7 @@ const submitFeedbackFlow = ai.defineFlow(
       console.log('Firestore instance retrieved successfully.');
 
       const feedbackRef = firestoreDb.collection('feedback');
-      console.log(`Attempting to write feedback to Firestore for user: ${input.userEmail}`);
+      console.log(`Attempting to write feedback to Firestore...`);
       
       await feedbackRef.add({
         ...input,

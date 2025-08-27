@@ -4,7 +4,8 @@
 import type { ReactNode } from "react";
 import React, { createContext, useState, useCallback, useEffect } from "react";
 import type { SynchronicityEvent } from "@/lib/types";
-import { useAuth } from "./auth-provider";
+
+const LOCAL_STORAGE_KEY = "synchronicities_events";
 
 interface EventsContextType {
   events: SynchronicityEvent[];
@@ -18,38 +19,37 @@ export const EventsContext = createContext<EventsContextType | undefined>(
 );
 
 export function EventsProvider({ children }: { children: ReactNode }) {
-  const { user } = useAuth();
   const [events, setEvents] = useState<SynchronicityEvent[]>([]);
 
-  // Effect to load events from localStorage when the component mounts or user changes
+  // Effect to load events from localStorage when the component mounts
   useEffect(() => {
-    if (typeof window !== 'undefined' && user) {
+    if (typeof window !== 'undefined') {
       try {
-        const item = window.localStorage.getItem(`events_${user.uid}`);
+        const item = window.localStorage.getItem(LOCAL_STORAGE_KEY);
         if (item) {
           setEvents(JSON.parse(item));
         } else {
-          setEvents([]); // Clear events if no stored data for this user
+          setEvents([]);
         }
       } catch (error) {
         console.error("Failed to parse events from localStorage", error);
         setEvents([]);
       }
     } else {
-      setEvents([]); // Clear events if no user
+      setEvents([]);
     }
-  }, [user]);
+  }, []);
 
   // Effect to save events to localStorage whenever they change
   useEffect(() => {
-    if (typeof window !== 'undefined' && user) {
+    if (typeof window !== 'undefined') {
         try {
-            window.localStorage.setItem(`events_${user.uid}`, JSON.stringify(events));
+            window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(events));
         } catch (error) {
             console.error("Failed to save events to localStorage", error);
         }
     }
-  }, [events, user]);
+  }, [events]);
 
   const addEvent = useCallback((event: Omit<SynchronicityEvent, "id">) => {
     setEvents((prevEvents) => [
