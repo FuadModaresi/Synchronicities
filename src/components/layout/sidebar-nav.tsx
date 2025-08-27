@@ -18,7 +18,7 @@ import {
   Sparkles,
   Settings,
   HelpCircle,
-  Menu,
+  Wind,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 
@@ -68,6 +68,19 @@ export function SidebarNav() {
               <Link href="/dashboard">
                 <LayoutDashboard />
                 <span>{t('dashboard')}</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              asChild
+              isActive={isActive("/zen-room")}
+              tooltip={{ children: t('zenRoom') }}
+              onClick={handleLinkClick}
+            >
+              <Link href="/zen-room">
+                <Wind />
+                <span>{t('zenRoom')}</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
