@@ -4,7 +4,7 @@
     "title": "Synchronicities",
     "eventEntry": "Event Entry",
     "dashboard": "Dashboard",
-    "zenRoom": "Zen Room",
+    "zenSphere": "Zen Sphere",
     "help": "Help & Support",
     "settings": "Settings"
   },
@@ -167,8 +167,8 @@
     "cancel": "Cancel",
     "confirm": "Yes, delete everything"
   },
-  "ZenRoomPage": {
-    "title": "Zen Room",
+  "ZenSpherePage": {
+    "title": "Zen Sphere",
     "description": "Find your center. Select a track, close your eyes, and just breathe.",
     "artistLabel": "Artist"
   }

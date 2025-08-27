@@ -74,13 +74,13 @@ export function SidebarNav() {
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild
-              isActive={isActive("/zen-room")}
-              tooltip={{ children: t('zenRoom') }}
+              isActive={isActive("/zen-sphere")}
+              tooltip={{ children: t('zenSphere') }}
               onClick={handleLinkClick}
             >
-              <Link href="/zen-room">
+              <Link href="/zen-sphere">
                 <Wind />
-                <span>{t('zenRoom')}</span>
+                <span>{t('zenSphere')}</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>

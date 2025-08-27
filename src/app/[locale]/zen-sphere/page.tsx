@@ -5,8 +5,8 @@ import { useTranslations } from "next-intl";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Music4, Wind } from "lucide-react";
 
-export default function ZenRoomPage() {
-  const t = useTranslations('ZenRoomPage');
+export default function ZenSpherePage() {
+  const t = useTranslations('ZenSpherePage');
   
   const tracks = [
     {

@@ -9,9 +9,9 @@ export const pathnames = {
     en: '/dashboard',
     fa: '/dashboard',
   },
-  '/zen-room': {
-    en: '/zen-room',
-    fa: '/zen-room',
+  '/zen-sphere': {
+    en: '/zen-sphere',
+    fa: '/zen-sphere',
   },
   '/help': {
     en: '/help',
