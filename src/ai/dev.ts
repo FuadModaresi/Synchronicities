@@ -6,3 +6,4 @@ import '@/ai/flows/generate-synchronicity-insights.ts';
 import '@/ai/flows/generate-dashboard-insights.ts';
 import '@/ai/flows/submit-feedback.ts';
 import '@/ai/flows/generate-pattern-analysis.ts';
+import '@/ai/flows/generate-audio-analysis.ts';

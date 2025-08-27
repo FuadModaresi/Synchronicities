@@ -18,9 +18,11 @@ import {
   ChartConfig
 } from "@/components/ui/chart";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts";
-import { BarChart3, TrendingUp, Sparkles, Telescope } from "lucide-react";
+import { BarChart3, TrendingUp, Sparkles, Telescope, Loader2, PlayCircle } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
 import { generateDashboardInsights, type GenerateDashboardInsightsOutput } from "@/ai/flows/generate-dashboard-insights";
+import { generateAudioAnalysis, type GenerateAudioAnalysisOutput } from "@/ai/flows/generate-audio-analysis";
+import { Button } from "./ui/button";
 
 
 const chartConfig = {
@@ -36,6 +38,9 @@ export function DashboardClient() {
   const { events } = useEvents();
   const [analysis, setAnalysis] = useState<GenerateDashboardInsightsOutput | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [audio, setAudio] = useState<GenerateAudioAnalysisOutput | null>(null);
+  const [isAudioLoading, setIsAudioLoading] = useState(false);
+
 
   useEffect(() => {
     const fetchAnalysis = async () => {
@@ -58,6 +63,22 @@ export function DashboardClient() {
 
     fetchAnalysis();
   }, [events, locale, t]);
+
+
+  const handleListenClick = async () => {
+    if (!analysis || !analysis.analysis) return;
+    setIsAudioLoading(true);
+    setAudio(null);
+    try {
+        const result = await generateAudioAnalysis(analysis.analysis);
+        setAudio(result);
+    } catch (error) {
+        console.error("Error generating audio analysis:", error);
+        // Optionally, show a toast to the user
+    } finally {
+        setIsAudioLoading(false);
+    }
+  };
 
 
   const numberFrequency = useMemo(() => {
@@ -139,19 +160,32 @@ export function DashboardClient() {
                     <Telescope className="w-6 h-6 text-primary"/>
                     {t('biggerPictureTitle')}
                 </CardTitle>
+                {analysis && !isLoading && (
+                    <Button variant="ghost" size="sm" onClick={handleListenClick} disabled={isAudioLoading}>
+                        {isAudioLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin"/> : <PlayCircle className="mr-2 h-4 w-4" />}
+                        {t('listenLabel')}
+                    </Button>
+                )}
             </div>
             <CardDescription>
               {t('biggerPictureDescription')}
             </CardDescription>
           </CardHeader>
-          <CardContent className="flex-grow flex items-center justify-center">
+          <CardContent className="flex-grow flex flex-col items-center justify-center">
              {isLoading ? (
                 <div className="text-center text-muted-foreground animate-pulse">
                   <Sparkles className="h-12 w-12 mx-auto mb-4 text-primary" />
                   <p>{t('analysisLoading')}</p>
                 </div>
               ) : analysis ? (
-                <p className="text-sm text-foreground/90 leading-relaxed">{analysis.analysis}</p>
+                <div className="w-full space-y-4">
+                  <p className="text-sm text-foreground/90 leading-relaxed">{analysis.analysis}</p>
+                  {audio && (
+                    <audio controls autoPlay src={audio.media} className="w-full">
+                        Your browser does not support the audio element.
+                    </audio>
+                  )}
+                </div>
               ) : (
                  <div className="text-center text-muted-foreground">
                     <BarChart3 className="h-12 w-12 mx-auto mb-4" />
