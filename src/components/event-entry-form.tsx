@@ -102,7 +102,6 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
     resolver: zodResolver(formSchema),
     defaultValues: {
       number: "",
-      // date and time are set in useEffect to avoid hydration mismatch
       location: "",
       emotionalState: "",
       peoplePresent: "",
