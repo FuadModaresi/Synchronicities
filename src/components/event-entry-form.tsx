@@ -102,6 +102,8 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
     resolver: zodResolver(formSchema),
     defaultValues: {
       number: "",
+      date: new Date(),
+      time: format(new Date(), "HH:mm"),
       location: "",
       emotionalState: "",
       peoplePresent: "",
@@ -110,13 +112,6 @@ export function EventEntryForm({ onInsightGenerated, setIsLoading, isLoading }: 
       photoDataUri: "",
     },
   });
-
-  useEffect(() => {
-    // Set date and time on client side to prevent hydration error
-    form.setValue('date', new Date());
-    form.setValue('time', format(new Date(), "HH:mm"));
-  }, [form]);
-
 
    useEffect(() => {
     if (showCamera) {
