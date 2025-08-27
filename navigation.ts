@@ -9,10 +9,6 @@ export const pathnames = {
     en: '/dashboard',
     fa: '/dashboard',
   },
-  '/login': {
-    en: '/login',
-    fa: '/login',
-  },
   '/help': {
     en: '/help',
     fa: '/help',
