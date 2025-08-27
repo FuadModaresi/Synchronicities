@@ -18,7 +18,7 @@ import {
   ChartConfig
 } from "@/components/ui/chart";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts";
-import { BarChart3, TrendingUp, Sparkles, BrainCircuit } from "lucide-react";
+import { BarChart3, TrendingUp, Sparkles, Telescope } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
 import { generateDashboardInsights, type GenerateDashboardInsightsOutput } from "@/ai/flows/generate-dashboard-insights";
 
@@ -136,7 +136,7 @@ export function DashboardClient() {
           <CardHeader>
             <div className="flex items-center justify-between">
                 <CardTitle className="font-headline text-2xl flex items-center gap-2">
-                    <BrainCircuit className="w-6 h-6 text-primary"/>
+                    <Telescope className="w-6 h-6 text-primary"/>
                     {t('biggerPictureTitle')}
                 </CardTitle>
             </div>
