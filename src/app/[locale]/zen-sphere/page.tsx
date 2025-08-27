@@ -3,7 +3,7 @@
 
 import { useTranslations } from "next-intl";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Music4, Wind } from "lucide-react";
+import { Music4 } from "lucide-react";
 
 export default function ZenSpherePage() {
   const t = useTranslations('ZenSpherePage');
@@ -29,7 +29,7 @@ export default function ZenSpherePage() {
   return (
     <div className="container mx-auto p-4 md:p-8">
       <header className="mb-8 text-center">
-        <Wind className="w-16 h-16 text-primary mx-auto mb-4" />
+        <Music4 className="w-16 h-16 text-primary mx-auto mb-4" />
         <h1 className="font-headline text-3xl md:text-5xl font-bold text-foreground mb-2">
           {t('title')}
         </h1>

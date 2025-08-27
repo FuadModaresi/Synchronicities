@@ -18,7 +18,7 @@ import {
   Sparkles,
   Settings,
   HelpCircle,
-  Wind,
+  Music4,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 
@@ -79,7 +79,7 @@ export function SidebarNav() {
               onClick={handleLinkClick}
             >
               <Link href="/zen-sphere">
-                <Wind />
+                <Music4 />
                 <span>{t('zenSphere')}</span>
               </Link>
             </SidebarMenuButton>
