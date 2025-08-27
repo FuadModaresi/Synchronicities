@@ -73,10 +73,10 @@ export default function SettingsPage() {
   return (
     <div className="container mx-auto p-4 md:p-8">
        <header className="mb-8">
-        <h1 className="font-headline text-4xl md:text-5xl font-bold text-foreground mb-2">
+        <h1 className="font-headline text-3xl md:text-5xl font-bold text-foreground mb-2">
           {t('title')}
         </h1>
-        <p className="text-muted-foreground text-lg">
+        <p className="text-muted-foreground text-base md:text-lg">
           {t('description')}
         </p>
       </header>
@@ -84,7 +84,7 @@ export default function SettingsPage() {
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
          <Card className="md:col-span-1">
             <CardHeader>
-                <CardTitle className="font-headline text-2xl">{t('dataManagementTitle')}</CardTitle>
+                <CardTitle className="font-headline text-xl md:text-2xl">{t('dataManagementTitle')}</CardTitle>
                 <CardDescription>{t('dataManagementDescription')}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">

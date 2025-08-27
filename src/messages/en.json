@@ -11,6 +11,7 @@
     "title": "Record a Synchronicity",
     "description": "What meaningful coincidence has crossed your path today? Capture the details to uncover hidden patterns.",
     "insightLoading": "Generating insight...",
+    "patternLoading": "Analyzing patterns...",
     "insightPlaceholderTitle": "Your insight will appear here",
     "insightPlaceholderDescription": "Fill out the form and our AI will provide an interpretation of your synchronicity event."
   },
@@ -51,6 +52,10 @@
   "InsightCard": {
     "title": "AI Insight",
     "description": "Here's a potential meaning behind your experience."
+  },
+  "PatternAnalysisCard": {
+    "title": "Pattern Analysis",
+    "description": "How this event connects to your journey so far."
   },
   "DashboardPage": {
     "title": "Your Pattern Dashboard",
