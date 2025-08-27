@@ -49,7 +49,7 @@ export default function ZenSpherePage() {
                     <CardDescription>{t('artistLabel')}: {track.artist}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <audio controls className="w-full">
+                    <audio controls={true} className="w-full">
                         <source src={track.src} type="audio/mpeg"/>
                         Your browser does not support the audio element.
                     </audio>
